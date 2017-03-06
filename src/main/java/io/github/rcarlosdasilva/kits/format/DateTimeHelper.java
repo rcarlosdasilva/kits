@@ -26,7 +26,8 @@ public class DateTimeHelper {
    * 默认格式化yyyy-MM-dd HH:mm:ss.
    * 
    * @param date
-   * @return String
+   *          日期
+   * @return String 格式化后字符串
    */
   public static String format(final Date date) {
     return format(date, DateTimePattern.Y_M_D_H_M_S);
@@ -36,12 +37,22 @@ public class DateTimeHelper {
    * 默认格式化yyyy-MM-dd HH:mm:ss.
    * 
    * @param timestamp
-   * @return String
+   *          时间戳
+   * @return String 格式化后字符串
    */
   public static String format(final long timestamp) {
     return format(timestamp, DateTimePattern.Y_M_D_H_M_S);
   }
 
+  /**
+   * 使用指定的格式
+   * 
+   * @param date
+   *          日期
+   * @param pattern
+   *          格式
+   * @return 格式化后字符串
+   */
   public static String format(final Date date, final DateTimePattern pattern) {
     if (pattern != null) {
       return format(date, pattern.getPattern());
@@ -49,6 +60,15 @@ public class DateTimeHelper {
     return null;
   }
 
+  /**
+   * 使用指定的格式
+   * 
+   * @param timestamp
+   *          时间戳
+   * @param pattern
+   *          格式
+   * @return 格式化后字符串
+   */
   public static String format(final long timestamp, final DateTimePattern pattern) {
     if (pattern != null) {
       return format(timestamp, pattern.getPattern());
@@ -56,6 +76,15 @@ public class DateTimeHelper {
     return null;
   }
 
+  /**
+   * 使用自定义格式
+   * 
+   * @param date
+   *          日期
+   * @param pattern
+   *          格式字符串
+   * @return 格式化后字符串
+   */
   public static String format(final Date date, final String pattern) {
     if (date != null && pattern != null && !pattern.trim().equals("")) {
       return instance(pattern).format(date);
@@ -63,6 +92,15 @@ public class DateTimeHelper {
     return null;
   }
 
+  /**
+   * 使用自定义格式
+   * 
+   * @param timestamp
+   *          时间戳
+   * @param pattern
+   *          格式字符串
+   * @return 格式化后字符串
+   */
   public static String format(final long timestamp, final String pattern) {
     return format(new Date(timestamp), pattern);
   }
@@ -70,7 +108,7 @@ public class DateTimeHelper {
   /**
    * 默认格式化yyyy-MM-dd HH:mm:ss.
    * 
-   * @return String
+   * @return 格式化后字符串
    */
   public static String currentDateTime() {
     return currentDateTime(defaultTimeZone);
@@ -79,7 +117,7 @@ public class DateTimeHelper {
   /**
    * 默认格式化yyyy-MM-dd.
    * 
-   * @return String
+   * @return 格式化后字符串
    */
   public static String currentDate() {
     return currentDate(defaultTimeZone);
@@ -88,7 +126,7 @@ public class DateTimeHelper {
   /**
    * 默认格式化HH:mm:ss.
    * 
-   * @return String
+   * @return 格式化后字符串
    */
   public static String currentTime() {
     return currentDate(defaultTimeZone);
@@ -98,7 +136,8 @@ public class DateTimeHelper {
    * 默认格式化yyyy-MM-dd HH:mm:ss.
    * 
    * @param zone
-   * @return String
+   *          时区
+   * @return 格式化后字符串
    */
   public static String currentDateTime(TimeZone zone) {
     return format(now(zone), DateTimePattern.Y_M_D_H_M_S);
@@ -108,7 +147,8 @@ public class DateTimeHelper {
    * 默认格式化yyyy-MM-dd.
    * 
    * @param zone
-   * @return String
+   *          时区
+   * @return 格式化后字符串
    */
   public static String currentDate(TimeZone zone) {
     return format(now(zone), DateTimePattern.Y_M_D);
@@ -118,20 +158,42 @@ public class DateTimeHelper {
    * 默认格式化HH:mm:ss.
    * 
    * @param zone
-   * @return String
+   *          时区
+   * @return 格式化后字符串
    */
   public static String currentTime(TimeZone zone) {
     return format(now(zone), DateTimePattern.H_M_S);
   }
 
+  /**
+   * 使用指定格式，当前时间
+   * 
+   * @param pattern
+   *          格式
+   * @return 格式化后字符串
+   */
   public static String current(final DateTimePattern pattern) {
     return format(now(defaultTimeZone), pattern);
   }
 
+  /**
+   * 使用自定义格式，当前时间
+   * 
+   * @param pattern
+   *          格式
+   * @return 格式化后字符串
+   */
   public static String current(final String pattern) {
     return format(now(defaultTimeZone), pattern);
   }
 
+  /**
+   * 转换日期字符串，转换不成功，返回Null
+   * 
+   * @param source
+   *          字符串
+   * @return 日期
+   */
   public static Date from(final String source) {
     if (source == null || source.trim().equals("")) {
       return null;

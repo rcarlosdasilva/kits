@@ -19,7 +19,8 @@ public abstract class JsonHelper {
   /**
    * 转成JSON字符串.
    * 
-   * @param obj 被转换对象
+   * @param obj
+   *          被转换对象
    * @return JSON字符串
    */
   abstract String toJson(Object obj);
@@ -27,8 +28,12 @@ public abstract class JsonHelper {
   /**
    * 根据给定的类型，转换成JSON字符串
    * 
-   * @param obj 被转换对象
-   * @param clazz 类型
+   * @param <T>
+   *          目标类型
+   * @param obj
+   *          被转换对象
+   * @param clazz
+   *          类型
    * @return JSON字符串
    */
   abstract <T> String toJson(T obj, Class<T> clazz);
@@ -36,8 +41,10 @@ public abstract class JsonHelper {
   /**
    * 将转换后的JSON字符串写入文件.
    * 
-   * @param path 文件路径
-   * @param obj 被转换对象
+   * @param path
+   *          文件路径
+   * @param obj
+   *          被转换对象
    * @return 是否成功
    */
   abstract boolean writeJosnToFile(String path, Object obj);
@@ -45,8 +52,10 @@ public abstract class JsonHelper {
   /**
    * 将转换后的JSON字符串写入文件.
    * 
-   * @param file {@link File} 文件对象
-   * @param obj 被转换对象
+   * @param file
+   *          {@link File} 文件对象
+   * @param obj
+   *          被转换对象
    * @return 是否成功
    */
   abstract boolean writeJosnToFile(File file, Object obj);
@@ -54,9 +63,14 @@ public abstract class JsonHelper {
   /**
    * 将转换后的JSON字符串写入文件.
    * 
-   * @param path 文件路径
-   * @param obj 被转换对象
-   * @param clazz 类型
+   * @param <T>
+   *          目标类型
+   * @param path
+   *          文件路径
+   * @param obj
+   *          被转换对象
+   * @param clazz
+   *          类型
    * @return 是否成功
    */
   abstract <T> boolean writeJsonToFile(String path, T obj, Class<T> clazz);
@@ -64,9 +78,14 @@ public abstract class JsonHelper {
   /**
    * 将转换后的JSON字符串写入文件.
    * 
-   * @param file {@link File} 文件对象
-   * @param obj 被转换对象
-   * @param clazz 类型
+   * @param <T>
+   *          目标类型
+   * @param file
+   *          {@link File} 文件对象
+   * @param obj
+   *          被转换对象
+   * @param clazz
+   *          类型
    * @return 是否成功
    */
   abstract <T> boolean writeJsonToFile(File file, T obj, Class<T> clazz);
@@ -74,7 +93,8 @@ public abstract class JsonHelper {
   /**
    * 将JSON字符串转换成Object对象.
    * 
-   * @param json JSON字符串
+   * @param json
+   *          JSON字符串
    * @return Object对象
    */
   abstract Object fromJson(String json);
@@ -82,8 +102,12 @@ public abstract class JsonHelper {
   /**
    * 将JSON字符串转换成指定类型的对象.
    * 
-   * @param json JSON字符串
-   * @param clazz 类型
+   * @param <T>
+   *          目标类型
+   * @param json
+   *          JSON字符串
+   * @param clazz
+   *          类型
    * @return 指定类型对象
    */
   abstract <T> T fromJson(String json, Class<T> clazz);
@@ -91,7 +115,8 @@ public abstract class JsonHelper {
   /**
    * 从JSON文件中读取对象.
    * 
-   * @param path 文件路径
+   * @param path
+   *          文件路径
    * @return Object对象
    */
   abstract Object readJsonFromFile(String path);
@@ -99,7 +124,8 @@ public abstract class JsonHelper {
   /**
    * 从JSON文件中读取对象.
    * 
-   * @param file 文件对象
+   * @param file
+   *          文件对象
    * @return Object对象
    */
   abstract Object readJsonFromFile(File file);
@@ -107,8 +133,12 @@ public abstract class JsonHelper {
   /**
    * 从JSON文件中读取指定类型的对象.
    * 
-   * @param path 文件路径
-   * @param clazz 类型
+   * @param <T>
+   *          目标类型
+   * @param path
+   *          文件路径
+   * @param clazz
+   *          类型
    * @return 指定类型对象
    */
   abstract <T> T readJsonFromFile(String path, Class<T> clazz);
@@ -116,8 +146,12 @@ public abstract class JsonHelper {
   /**
    * 从JSON文件中读取指定类型的对象.
    * 
-   * @param file 文件对象
-   * @param clazz 类型
+   * @param <T>
+   *          目标类型
+   * @param file
+   *          文件对象
+   * @param clazz
+   *          类型
    * @return 指定类型对象
    */
   abstract <T> T readJsonFromFile(File file, Class<T> clazz);

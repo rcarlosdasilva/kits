@@ -603,7 +603,7 @@ public class BCryptHelper {
    * 
    * @param plaintext
    *          the plaintext password to verify
-   * @param hashed
+   * @param ciphertext
    *          the previously-hashed password
    * @return true if the passwords match, false otherwise
    */

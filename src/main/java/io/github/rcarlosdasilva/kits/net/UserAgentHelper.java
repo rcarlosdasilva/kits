@@ -20,6 +20,7 @@ public class UserAgentHelper {
    * Returns UserAgent based on specified unique id
    * 
    * @param id
+   *          id
    * @return UserAgent
    */
   public static UserAgent valueOf(int id) {
@@ -32,6 +33,7 @@ public class UserAgentHelper {
    * Returns UserAgent based on combined string representation
    * 
    * @param name
+   *          name
    * @return UserAgent
    */
   public static UserAgent valueOf(String name) {

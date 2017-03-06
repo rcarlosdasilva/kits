@@ -619,8 +619,6 @@ public final class TextHelper {
    * 
    * @param source
    *          original string
-   * @param counts
-   *          remove times
    * @param parts
    *          strings to be removed
    * @return processed string
