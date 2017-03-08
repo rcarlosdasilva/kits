@@ -179,6 +179,8 @@
 				<version>2.5.3</version>
 				<configuration>
 					<tagNameFormat>v@{project.version}</tagNameFormat>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<goals>deploy</goals>
 				</configuration>
 			</plugin>
 
@@ -239,6 +241,11 @@
 						<goals>
 							<goal>sign</goal>
 						</goals>
+						<configuration>
+							<gpgArguments>
+								<gpgArgument>--no-tty</gpgArgument>
+							</gpgArguments>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
