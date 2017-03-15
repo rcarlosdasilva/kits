@@ -12,7 +12,7 @@ import com.google.common.base.Strings;
  * 
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
-public class JacksonHelper extends JsonHelper {
+public class JacksonHelper implements JsonHelper {
 
   private final ObjectMapper normalOM;
 

@@ -15,7 +15,7 @@ import com.alibaba.fastjson.JSONWriter;
  * 
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
-public class FastJsonHelper extends JsonHelper {
+public class FastJsonHelper implements JsonHelper {
 
   FastJsonHelper() {
   }

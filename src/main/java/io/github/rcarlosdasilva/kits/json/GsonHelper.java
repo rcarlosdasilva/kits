@@ -13,7 +13,7 @@ import com.google.gson.Gson;
  * 
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
-public class GsonHelper extends JsonHelper {
+public class GsonHelper implements JsonHelper {
 
   private final Gson normalGson;
 
