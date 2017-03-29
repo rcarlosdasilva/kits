@@ -23,6 +23,13 @@ public final class TextHelper {
   private TextHelper() {
   }
 
+  public static String value(final String value, final String defaultValue) {
+    if (value == null || value.trim().length() == 0) {
+      return defaultValue;
+    }
+    return value;
+  }
+
   /**
    * 拼接多个字符串.
    * 

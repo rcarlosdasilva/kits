@@ -7,6 +7,10 @@ public enum DateTimePattern {
    */
   HMS("HHmmss"),
   /**
+   * HH:mm.
+   */
+  H_M("HH:mm"),
+  /**
    * HH:mm:ss.
    */
   H_M_S("HH:mm:ss"),
@@ -19,9 +23,21 @@ public enum DateTimePattern {
    */
   Y_M_D("yyyy-MM-dd"),
   /**
+   * yyyy-MM
+   */
+  Y_M("yyyy-MM"),
+  /**
+   * yyyy-MM-dd.
+   */
+  M_D("MM-dd"),
+  /**
    * yyyyMMddHHmmss.
    */
   YMDHMS("yyyyMMddHHmmss"),
+  /**
+   * MM-dd HH:mm.
+   */
+  M_D_H_M("MM-dd HH:mm"),
   /**
    * yyyy-MM-dd HH:mm:ss.
    */
