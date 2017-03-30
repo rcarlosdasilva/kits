@@ -1,9 +1,7 @@
 package io.github.rcarlosdasilva.kits.bean;
 
-import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -17,25 +15,85 @@ import com.google.common.collect.Lists;
  */
 public class BeanCopyHelper {
 
-  public static <T> T copyBeans(Class<T> type, T target, Object... sources) {
+  /**
+   * 将多个源，拷贝属性形成新的目标对象集合.
+   * 
+   * @param <T>
+   *          type
+   * @param clazz
+   *          class type
+   * @param sources
+   *          拷贝源集合
+   * @return 目标对象集合
+   */
+  public static <T> List<T> copyBeanList(Class<T> clazz, List<Object> sources) {
+    if (sources == null || sources.size() == 0) {
+      return Collections.emptyList();
+    }
+
+    List<T> targets = Lists.newArrayListWithCapacity(sources.size());
+    for (Object source : sources) {
+      targets.add(copyBean(clazz, source));
+    }
+    return null;
+  }
+
+  /**
+   * 将传入的多个源sources中的属性，覆盖入给定的targt对象（注：多个源中的属性如果有重复，会按顺序被最后的源覆盖）.
+   * 
+   * @param <T>
+   *          type
+   * @param clazz
+   *          class type
+   * @param target
+   *          已有目标对象
+   * @param sources
+   *          拷贝源
+   * @return 目标对象
+   */
+  public static <T> T copyBeans(Class<T> clazz, T target, Object... sources) {
     Preconditions.checkNotNull(sources);
 
     for (Object source : sources) {
-      copyBean(type, target, source);
+      copyBean(clazz, target, source);
     }
 
     return target;
   }
 
-  public static <T> T copyBeans(Class<T> type, Object... sources) {
+  /**
+   * 将传入的多个源sources中的属性，拷贝到一个新创建的目标对象中（注：多个源中的属性如果有重复，会按顺序被最后的源覆盖）.
+   * 
+   * @param <T>
+   *          type
+   * @param clazz
+   *          class type
+   * @param sources
+   *          拷贝源
+   * @return 目标对象
+   */
+  public static <T> T copyBeans(Class<T> clazz, Object... sources) {
     try {
-      return copyBeans(type, type.newInstance(), sources);
+      return copyBeans(clazz, clazz.newInstance(), sources);
     } catch (InstantiationException | IllegalAccessException e) {
       e.printStackTrace();
       return null;
     }
   }
 
+  /**
+   * 将source的属性覆盖入给定的targt对象.
+   * 
+   * @param <T>
+   *          type
+   * @param clazz
+   *          class type
+   * @param target
+   *          已有目标对象
+   * @param source
+   *          拷贝源
+   * @return 目标对象
+   */
   public static <T> T copyBean(Class<T> clazz, T target, Object source) {
     Preconditions.checkNotNull(source);
     Preconditions.checkNotNull(target);
@@ -46,98 +104,38 @@ public class BeanCopyHelper {
 
       for (final Map.Entry<String, Object> entry : propMap.entrySet()) {
         final String name = entry.getKey();
-
-        PropertyDescriptor descriptor = propertyDescriptor(clazz, name);
-
-        if (isWriteable(descriptor)) {
-          write(target, descriptor, entry.getValue());
-        }
+        PropertyHelper.write(target, name, entry.getValue());
       }
     } else {
       final Class<?> sourceType = source.getClass();
-      final List<PropertyDescriptor> sourceDescriptors = propertyDescriptors(sourceType);
+      final List<PropertyDescriptor> sourceDescriptors = PropertyHelper
+          .propertyDescriptors(sourceType);
 
       for (PropertyDescriptor sourceDescriptor : sourceDescriptors) {
         final String name = sourceDescriptor.getName();
-
-        PropertyDescriptor targetDescriptor = propertyDescriptor(clazz, name);
-
-        if (isReadable(sourceDescriptor) && isWriteable(targetDescriptor)) {
-          final Object value = read(source, sourceDescriptor);
-          if (value != null) {
-            write(target, targetDescriptor, value);
-          }
-        }
+        final Object value = PropertyHelper.read(source, name);
+        PropertyHelper.write(target, name, value);
       }
     }
 
     return target;
   }
 
-  public static <T> T copyBean(Class<T> type, Object source) {
+  /**
+   * 将source的属性拷贝到一个新创建的目标对象中.
+   * 
+   * @param <T>
+   *          type
+   * @param clazz
+   *          class type
+   * @param source
+   *          拷贝源
+   * @return 目标对象
+   */
+  public static <T> T copyBean(Class<T> clazz, Object source) {
     try {
-      return copyBean(type, type.newInstance(), source);
+      return copyBean(clazz, clazz.newInstance(), source);
     } catch (InstantiationException | IllegalAccessException e) {
-      e.printStackTrace();
-      return null;
-    }
-  }
-
-  private static List<PropertyDescriptor> propertyDescriptors(Class<?> clazz) {
-    final Field[] fields = clazz.getDeclaredFields();
-    List<PropertyDescriptor> descriptors = Lists.newArrayList();
-
-    for (int i = 0; i < fields.length; i++) {
-      final Field field = fields[i];
-      String name = field.getName();
-
-      if ("class".equals(name)) {
-        continue;
-      }
-
-      PropertyDescriptor descriptor = propertyDescriptor(clazz, name);
-      if (descriptor != null) {
-        descriptors.add(descriptor);
-      }
-    }
-
-    return descriptors;
-  }
-
-  private static PropertyDescriptor propertyDescriptor(Class<?> clazz, String propertyName) {
-    try {
-      return new PropertyDescriptor(propertyName, clazz);
-    } catch (IntrospectionException e) {
-      return null;
-    }
-  }
-
-  private static boolean isWriteable(PropertyDescriptor descriptor) {
-    if (descriptor != null) {
-      return descriptor.getWriteMethod() != null;
-    }
-    return false;
-  }
-
-  private static boolean isReadable(PropertyDescriptor descriptor) {
-    if (descriptor != null) {
-      return descriptor.getReadMethod() != null;
-    }
-    return false;
-  }
-
-  private static void write(Object target, PropertyDescriptor descriptor, Object value) {
-    try {
-      descriptor.getWriteMethod().invoke(target, value);
-    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-      e.printStackTrace();
-    }
-  }
-
-  private static Object read(Object source, PropertyDescriptor descriptor) {
-    try {
-      return descriptor.getReadMethod().invoke(source);
-    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
       e.printStackTrace();
       return null;
     }
