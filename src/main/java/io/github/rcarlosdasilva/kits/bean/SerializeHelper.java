@@ -13,6 +13,10 @@ import java.io.ObjectOutputStream;
  */
 public class SerializeHelper {
 
+  public static boolean isEmpty(byte[] data) {
+    return (data == null || data.length == 0);
+  }
+
   public static byte[] serialize(Object object) {
     try {
       return serialize_(object);
@@ -36,9 +40,9 @@ public class SerializeHelper {
     return result;
   }
 
-  public static Object unserialize(byte[] bytes) {
+  public static Object deserialize(byte[] bytes) {
     try {
-      return unserialize_(bytes);
+      return deserialize_(bytes);
     } catch (Exception e) {
       e.printStackTrace();
       return null;
@@ -46,16 +50,16 @@ public class SerializeHelper {
   }
 
   @SuppressWarnings("unchecked")
-  public static <T> T unserialize(byte[] bytes, Class<T> clazz) {
+  public static <T> T deserialize(byte[] bytes, Class<T> clazz) {
     try {
-      return (T) unserialize_(bytes);
+      return (T) deserialize_(bytes);
     } catch (Exception e) {
       e.printStackTrace();
       return null;
     }
   }
 
-  private static Object unserialize_(byte[] bytes) throws ClassNotFoundException, IOException {
+  private static Object deserialize_(byte[] bytes) throws ClassNotFoundException, IOException {
     if (bytes == null || bytes.length <= 0) {
       return null;
     }

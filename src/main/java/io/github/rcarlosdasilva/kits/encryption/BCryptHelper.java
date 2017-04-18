@@ -625,18 +625,4 @@ public class BCryptHelper {
     return ret == 0;
   }
 
-  public static void main(String[] args) {
-    String pt = "sodihjowssssssssssssssssssefoiunk";
-    // String cc = ReplicaBCryptHelper.encrypt(pt);
-    // System.out.println(cc);
-    // System.out.println(ReplicaBCryptHelper.check(pt, cc));
-
-    long start = System.currentTimeMillis();
-    for (int i = 0; i < 10; i++) {
-      System.out.println(BCryptHelper.encrypt(pt));
-    }
-    long end = System.currentTimeMillis();
-    System.out.println(end - start);
-  }
-
 }

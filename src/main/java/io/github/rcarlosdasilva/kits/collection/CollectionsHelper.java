@@ -33,7 +33,7 @@ public class CollectionsHelper {
    * @return map
    */
   @SuppressWarnings("unchecked")
-  public static <K, V> Map<K, V> listToMap(String propertyName, List<Object> sources) {
+  public static <K, V> Map<K, V> listToMap(String propertyName, List<? extends Object> sources) {
     Preconditions.checkNotNull(propertyName);
     Preconditions.checkNotNull(sources);
 
@@ -67,7 +67,7 @@ public class CollectionsHelper {
    */
   @SuppressWarnings("unchecked")
   public static <K, V> Map<K, List<V>> listToMapWithClustering(String propertyName,
-      List<Object> sources) {
+      List<? extends Object> sources) {
     Preconditions.checkNotNull(propertyName);
     Preconditions.checkNotNull(sources);
 
@@ -100,7 +100,8 @@ public class CollectionsHelper {
    * @return list
    */
   @SuppressWarnings("unchecked")
-  public static <V> List<V> listToListWithSeparate(String propertyName, List<Object> sources) {
+  public static <V> List<V> listToListWithSeparate(String propertyName,
+      List<? extends Object> sources) {
     Preconditions.checkNotNull(propertyName);
     Preconditions.checkNotNull(sources);
 
@@ -129,7 +130,8 @@ public class CollectionsHelper {
    *          源集合
    * @return set
    */
-  public static <V> Set<V> listToSetWithSeparate(String propertyName, List<Object> sources) {
+  public static <V> Set<V> listToSetWithSeparate(String propertyName,
+      List<? extends Object> sources) {
     return Sets.newHashSet(listToListWithSeparate(propertyName, sources));
   }
 

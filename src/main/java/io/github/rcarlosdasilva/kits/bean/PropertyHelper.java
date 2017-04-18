@@ -126,6 +126,20 @@ public class PropertyHelper {
    *          属性描述
    * @param value
    *          值
+   * @exception IllegalAccessException
+   *              if this {@code Method} object is enforcing Java language
+   *              access control and the underlying method is inaccessible.
+   * @exception IllegalArgumentException
+   *              if the method is an instance method and the specified object
+   *              argument is not an instance of the class or interface
+   *              declaring the underlying method (or of a subclass or
+   *              implementor thereof); if the number of actual and formal
+   *              parameters differ; if an unwrapping conversion for primitive
+   *              arguments fails; or if, after possible unwrapping, a parameter
+   *              value cannot be converted to the corresponding formal
+   *              parameter type by a method invocation conversion.
+   * @exception InvocationTargetException
+   *              if the underlying method throws an exception.
    */
   public static void write(Object target, PropertyDescriptor descriptor, Object value)
       throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -137,8 +151,8 @@ public class PropertyHelper {
    * 
    * @param source
    *          目标对象
-   * @param descriptor
-   *          属性描述
+   * @param propertyName
+   *          属性名
    * @return 值
    */
   public static Object read(Object source, String propertyName) {
@@ -167,6 +181,20 @@ public class PropertyHelper {
    * @param descriptor
    *          属性描述
    * @return 值
+   * @exception IllegalAccessException
+   *              if this {@code Method} object is enforcing Java language
+   *              access control and the underlying method is inaccessible.
+   * @exception IllegalArgumentException
+   *              if the method is an instance method and the specified object
+   *              argument is not an instance of the class or interface
+   *              declaring the underlying method (or of a subclass or
+   *              implementor thereof); if the number of actual and formal
+   *              parameters differ; if an unwrapping conversion for primitive
+   *              arguments fails; or if, after possible unwrapping, a parameter
+   *              value cannot be converted to the corresponding formal
+   *              parameter type by a method invocation conversion.
+   * @exception InvocationTargetException
+   *              if the underlying method throws an exception.
    */
   public static Object read(Object source, PropertyDescriptor descriptor)
       throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
