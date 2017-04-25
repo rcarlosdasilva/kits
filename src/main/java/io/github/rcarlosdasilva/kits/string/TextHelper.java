@@ -1,6 +1,7 @@
 package io.github.rcarlosdasilva.kits.string;
 
 import java.util.Collection;
+import java.util.Random;
 
 import com.google.common.base.Ascii;
 import com.google.common.base.Function;
@@ -18,7 +19,8 @@ import com.google.common.collect.Lists;
  */
 public final class TextHelper {
 
-  private static final Joiner nonSeparatorJoiner = Joiner.on("");
+  private static final Joiner NON_SEPARATOR_JOINER = Joiner.on("");
+  private static final Random DEFAULT_RANDOM = new Random();
 
   private TextHelper() {
   }
@@ -34,13 +36,37 @@ public final class TextHelper {
    * 拼接多个字符串.
    * 
    * <pre>
-   * TextHelper.joint("1", "2", "3"); // return "123";
+   * TextHelper.concat("1", "2", "3"); // return "123";
    * </pre>
    * 
    * @param parts
    *          an array of strings to joint
    * @return processed string
    */
+  public static String concat(final String... parts) {
+    return NON_SEPARATOR_JOINER.join(parts);
+  }
+
+  /**
+   * 拼接多个字符串.
+   * 
+   * <pre>
+   * List strings = new ArrayList();
+   * strings.add("1");
+   * strings.add("2");
+   * strings.add("3");
+   * TextHelper.concat(); // return "123";
+   * </pre>
+   * 
+   * @param parts
+   *          an array of strings to joint
+   * @return processed string
+   */
+  public static String concat(final Iterable<String> parts) {
+    return NON_SEPARATOR_JOINER.join(parts);
+  }
+
+  @Deprecated
   public static String joint(final String... parts) {
     return joint(null, parts);
   }
@@ -58,15 +84,16 @@ public final class TextHelper {
    *          an array of strings to joint
    * @return processed string
    */
+  @Deprecated
   public static String joint(final String source, final String[] parts) {
     if (parts == null || parts.length == 0) {
       return source;
     }
 
     if (source == null) {
-      return nonSeparatorJoiner.join(parts);
+      return NON_SEPARATOR_JOINER.join(parts);
     } else {
-      return source + nonSeparatorJoiner.join(parts);
+      return source + NON_SEPARATOR_JOINER.join(parts);
     }
   }
 
@@ -81,6 +108,7 @@ public final class TextHelper {
    *          an array of strings to joint
    * @return processed string
    */
+  @Deprecated
   public static String jointArray(final String[] parts) {
     return joint(null, parts);
   }
@@ -959,7 +987,7 @@ public final class TextHelper {
 
         });
 
-    return nonSeparatorJoiner.join(casedWords);
+    return NON_SEPARATOR_JOINER.join(casedWords);
   }
 
   /**
@@ -1029,6 +1057,38 @@ public final class TextHelper {
     sourceCopy = remove(sourceCopy, -1, odd);
 
     return sourceCopy;
+  }
+
+  /**
+   * 生成随机字符串，可用字符可使用 {@link Characters}指定
+   * 
+   * <pre>
+   * TextHelper.random(10, Characters.NUMBERS_AND_LETTERS); // return "3xlW9fq01z"
+   * </pre>
+   * 
+   * @param length
+   *          随机字符串长度
+   * @param sources
+   *          随机字符串可用字符集合
+   * @return processed string
+   */
+  public static String random(final int length, final String... sources) {
+    if (length <= 0) {
+      return "";
+    }
+
+    String source = concat(sources);
+    if (Strings.isNullOrEmpty(source)) {
+      return "";
+    }
+
+    char[] chars = new char[length];
+    int size = source.length();
+    for (int i = 0; i < length; i++) {
+      chars[i] = source.charAt(DEFAULT_RANDOM.nextInt(size));
+    }
+
+    return new String(chars);
   }
 
 }
