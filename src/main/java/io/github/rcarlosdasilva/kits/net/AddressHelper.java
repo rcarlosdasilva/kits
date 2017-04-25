@@ -20,6 +20,8 @@ public class AddressHelper {
   private static final String HTTP_CLIENT_IP = "HTTP_CLIENT_IP";
   private static final String HTTP_X_FORWARDED_FOR = "HTTP_X_FORWARDED_FOR";
 
+  private static final Splitter IP_SPLITTER = Splitter.on(",");
+
   /**
    * 获取请求的项目模块路径，以/开头.
    * 
@@ -63,17 +65,25 @@ public class AddressHelper {
   }
 
   /**
-   * 判断给定的ip字符串是否合法.
+   * 判断给定的ip字符串是否合法的IP v4.
    * 
    * @param ip
    *          ip地址
    * @return 是否合法
    */
-  public static boolean isLegalIp(String ip) {
-    if (ip == null) {
-      return false;
-    }
-    return ip.matches(PatternProvider.IP4);
+  public static boolean isLegalIpv4(String ip) {
+    return ip != null && ip.matches(PatternProvider.IPV4);
+  }
+
+  /**
+   * 判断给定的ip字符串是否合法的IP v6.
+   * 
+   * @param ip
+   *          ip地址
+   * @return 是否合法
+   */
+  public static boolean isLegalIpv6(String ip) {
+    return ip != null && ip.matches(PatternProvider.IPV6);
   }
 
   /**
@@ -91,9 +101,9 @@ public class AddressHelper {
     String ip = remoteIpFromHeader(request, X_FORWARDED_FOR);
 
     if (!Strings.isNullOrEmpty(ip) && ip.contains(",")) {
-      Iterable<String> ips = Splitter.on(",").split(ip);
+      Iterable<String> ips = IP_SPLITTER.split(ip);
       ip = ips.iterator().next();
-      if (!isLegalIp(ip)) {
+      if (!isLegalIpv4(ip) && !isLegalIpv6(ip)) {
         ip = null;
       }
     }
@@ -127,7 +137,7 @@ public class AddressHelper {
    */
   private static String remoteIpFromHeader(HttpServletRequest request, String key) {
     String ip = request.getHeader(key);
-    if (ip != null && isLegalIp(ip)) {
+    if (ip != null && (isLegalIpv4(ip) || isLegalIpv6(ip))) {
       return ip;
     }
     return null;
