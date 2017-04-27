@@ -12,6 +12,8 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
+import io.github.rcarlosdasilva.kits.convention.PatternProvider;
+
 /**
  * 文本帮助类
  * 
@@ -1063,7 +1065,8 @@ public final class TextHelper {
    * 生成随机字符串，可用字符可使用 {@link Characters}指定
    * 
    * <pre>
-   * TextHelper.random(10, Characters.NUMBERS_AND_LETTERS); // return "3xlW9fq01z"
+   * TextHelper.random(10, Characters.NUMBERS_AND_LETTERS); // return
+   *                                                        // "3xlW9fq01z"
    * </pre>
    * 
    * @param length
@@ -1089,6 +1092,29 @@ public final class TextHelper {
     }
 
     return new String(chars);
+  }
+
+  /**
+   * 只保留纯字符，清除所有的XML或HTML标签
+   * 
+   * @param source
+   *          original string
+   * @param clean
+   *          清除多余空格
+   * @param singleSpace
+   *          清除多余空格时，保留一个空格
+   * @return
+   */
+  public static String pure(final String source, boolean clean, boolean singleSpace) {
+    String pureString = source.replaceAll(PatternProvider.HTML_STRIP, "");
+    if (clean) {
+      if (singleSpace) {
+        return simplifyWhitespace(pureString);
+      } else {
+        return remove(pureString, " ");
+      }
+    }
+    return pureString;
   }
 
 }

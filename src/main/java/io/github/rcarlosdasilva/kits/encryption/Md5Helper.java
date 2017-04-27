@@ -49,9 +49,4 @@ public class Md5Helper {
     builder.append(c1);
   }
 
-  public static void main(String[] args) {
-    System.out.println(md5("11111111"));
-    System.out.println(md5("22222222"));
-  }
-
 }

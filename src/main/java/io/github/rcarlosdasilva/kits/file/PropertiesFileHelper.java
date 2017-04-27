@@ -109,12 +109,4 @@ public class PropertiesFileHelper {
     write(file, values, append);
   }
 
-  public static void main(String[] args) {
-    try {
-      write("d:\\test.properties", "e", "5", false);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
 }
