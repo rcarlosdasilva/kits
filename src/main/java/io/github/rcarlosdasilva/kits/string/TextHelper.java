@@ -38,7 +38,7 @@ public final class TextHelper {
    * 拼接多个字符串.
    * 
    * <pre>
-   * TextHelper.concat("1", "2", "3"); // return "123";
+   * TextHelper.concat("1", "", "2", null, "3"); // return "123";
    * </pre>
    * 
    * @param parts
@@ -46,7 +46,7 @@ public final class TextHelper {
    * @return processed string
    */
   public static String concat(final String... parts) {
-    return NON_SEPARATOR_JOINER.join(parts);
+    return NON_SEPARATOR_JOINER.join(clean(parts, true));
   }
 
   /**
@@ -55,9 +55,11 @@ public final class TextHelper {
    * <pre>
    * List strings = new ArrayList();
    * strings.add("1");
+   * strings.add("");
    * strings.add("2");
+   * strings.add(null);
    * strings.add("3");
-   * TextHelper.concat(); // return "123";
+   * TextHelper.concat(strings); // return "123";
    * </pre>
    * 
    * @param parts
@@ -65,7 +67,56 @@ public final class TextHelper {
    * @return processed string
    */
   public static String concat(final Iterable<String> parts) {
-    return NON_SEPARATOR_JOINER.join(parts);
+    return NON_SEPARATOR_JOINER.join(clean(parts, true));
+  }
+
+  /**
+   * 拼接多个字符串，之间用separator间隔.
+   * 
+   * <pre>
+   * // return "1::2:3";
+   * TextHelper.concat(new String[] { "1", "", "2", null, "3" }, ":");
+   * </pre>
+   * 
+   * @param parts
+   *          an array of strings to joint
+   * @param separator
+   *          separator
+   * @return processed string
+   */
+  public static String concat(final String[] parts, String separator) {
+    if (Strings.isNullOrEmpty(separator)) {
+      return concat(parts);
+    }
+
+    return Joiner.on(separator).join(clean(parts, true));
+  }
+
+  /**
+   * 拼接多个字符串，之间用separator间隔.
+   * 
+   * <pre>
+   * List strings = new ArrayList();
+   * strings.add("1");
+   * strings.add("");
+   * strings.add("2");
+   * strings.add(null);
+   * strings.add("3");
+   * TextHelper.concat(strings, ":"); // return "1::2:3";
+   * </pre>
+   * 
+   * @param parts
+   *          an array of strings to joint
+   * @param separator
+   *          separator
+   * @return processed string
+   */
+  public static String concat(final Iterable<String> parts, String separator) {
+    if (Strings.isNullOrEmpty(separator)) {
+      return concat(parts);
+    }
+
+    return Joiner.on(separator).join(clean(parts, true));
   }
 
   @Deprecated
@@ -116,7 +167,7 @@ public final class TextHelper {
   }
 
   /**
-   * 获取指定下标的单个字母字符串，index为负数时，从后向前找.
+   * 获取指定下标的单个字母字符串，index为负数时，从后向前找，index从0开始计数，0返回左侧第一个字符.
    * 
    * <pre>
    * TextHelper.at("0123456789", 4); // return "4";
@@ -147,7 +198,7 @@ public final class TextHelper {
   }
 
   /**
-   * 获取指定下标开始之前/之后的若干个字母字符串，index为负数时，从后向前找，length为负数时，向前截取.
+   * 获取从指定下标开始之前/之后的子字符串，index为负数时，从后向前找，子字符串的长度由length决定，length为负数时，向前截取.
    * 
    * <pre>
    * TextHelper.sub("0123456789", 3, 3); // return "345"
@@ -196,8 +247,30 @@ public final class TextHelper {
         return source.substring(length, index);
       }
     } else {
-      return null;
+      return "";
     }
+  }
+
+  /**
+   * 截取在给定开始、结束字符串之间的子字符串，before指定截取的子字符串前的字符串，after指定子字符串之后的.
+   * 
+   * <pre>
+   * TextHelper.sub("abc0123xyz", "abc", "xyz"); // return "0123"
+   * TextHelper.sub("abcabc0123xyzxyz", "abc", "xyz"); // return "0123"
+   * </pre>
+   * 
+   * @param source
+   *          original string
+   * @param before
+   *          string before substring
+   * @param after
+   *          string after substring
+   * @return processed string
+   */
+  public static String sub(final String source, final String before, final String after) {
+    String substring = trim(source, before, -1);
+    substring = trim(substring, after, 1);
+    return substring;
   }
 
   /**
@@ -272,7 +345,7 @@ public final class TextHelper {
       parts[i] = parts[i].substring(startAt);
     }
 
-    return cleanEmpty(parts);
+    return clean(parts, false);
   }
 
   /**
@@ -853,14 +926,40 @@ public final class TextHelper {
    * 
    * <pre>
    * // return ["123", "abc"]
-   * TextHelper.cleanEmpty(new String[] { "", "123", "", "abc" });
+   * TextHelper.clean(new String[] { "", "123", "", "abc", null }, false);
+   * // return ["", "123", "", "abc"]
+   * TextHelper.clean(new String[] { "", "123", "", "abc", null }, true);
    * </pre>
    * 
    * @param source
    *          an array of strings to clear
+   * @param justNull
+   *          just clean null value
    * @return processed string
    */
-  public static Collection<String> cleanEmpty(String[] source) {
+  public static Collection<String> clean(final String[] source, final boolean justNull) {
+    if (source == null) {
+      return null;
+    }
+
+    return clean(Lists.newArrayList(source), justNull);
+  }
+
+  /**
+   * 清除集合中所有空字符串.
+   * 
+   * <pre>
+   * // return ["123", "abc"]
+   * TextHelper.clean(new String[] { "", "123", "", "abc" });
+   * </pre>
+   * 
+   * @param source
+   *          an array of strings to clear
+   * @param justNull
+   *          just clean null value
+   * @return processed string
+   */
+  public static Collection<String> clean(final Iterable<String> source, final boolean justNull) {
     if (source == null) {
       return null;
     }
@@ -869,9 +968,12 @@ public final class TextHelper {
 
       @Override
       public boolean apply(String input) {
-        return input != null && input.trim().length() > 0;
+        if (justNull) {
+          return input != null;
+        } else {
+          return input != null && input.trim().length() > 0;
+        }
       }
-
     });
   }
 
@@ -1037,10 +1139,25 @@ public final class TextHelper {
   }
 
   /**
+   * 清除字符串两侧的空格.
+   * 
+   * <pre>
+   * TextHelper.trim("   clean string    "); // return "clean string"
+   * </pre>
+   * 
+   * @param source
+   *          original string
+   * @return processed string
+   */
+  public static String trim(final String source) {
+    return trim(source, " ");
+  }
+
+  /**
    * 修剪字符串两侧指定字符串.
    * 
    * <pre>
-   * TextHelper.trim("ab123ab", "ab"); // return "123"
+   * TextHelper.trim("abab123abab", "ab"); // return "123"
    * </pre>
    * 
    * @param source
@@ -1050,15 +1167,55 @@ public final class TextHelper {
    * @return processed string
    */
   public static String trim(final String source, final String odd) {
+    return trim(source, odd, 0);
+  }
+
+  /**
+   * 按指定方向修剪字符串两侧指定字符串.
+   * 
+   * <pre>
+   * TextHelper.trim("abab123abab", "ab", 0); // return "123"
+   * TextHelper.trim("abab123abab", "ab", -1); // return "123abab"
+   * TextHelper.trim("abab123abab", "ab", 1); // return "abab123"
+   * </pre>
+   * 
+   * @param source
+   *          original string
+   * @param odd
+   *          string to be removed
+   * @parm place 0清除两侧，负数清除左侧，正数清除右侧
+   * @return processed string
+   */
+  public static String trim(final String source, final String odd, final int place) {
     if (source == null) {
       return null;
     }
+    if (Strings.isNullOrEmpty(odd)) {
+      return source;
+    }
 
-    String sourceCopy = source;
-    sourceCopy = remove(sourceCopy, 1, odd);
-    sourceCopy = remove(sourceCopy, -1, odd);
+    int length = source.length();
+    int step = odd.length();
+    int start = 0;
+    int end = length;
 
-    return sourceCopy;
+    if (place <= 0) {
+      while (start < end && source.indexOf(odd, start) == start) {
+        start += step;
+      }
+    }
+
+    if (place >= 0) {
+      while (start < end && source.lastIndexOf(odd, end - 1) == (end - step)) {
+        end -= step;
+      }
+    }
+
+    if (start > 0 || end < length) {
+      return source.substring(start, end);
+    }
+
+    return source;
   }
 
   /**
@@ -1115,6 +1272,41 @@ public final class TextHelper {
       }
     }
     return pureString;
+  }
+
+  /**
+   * 删除字符串末尾的换行符。如果字符串不以换行结尾，则什么也不做.
+   * 
+   * <p>
+   * 换行符有三种情形："<code>\n</code>"、"<code>\r</code>"、" <code>\r\n</code>"。
+   * 
+   * <pre>
+   * TextHelper.chomp(null)          = null
+   * TextHelper.chomp("")            = ""
+   * TextHelper.chomp("abc \r")      = "abc "
+   * TextHelper.chomp("abc\n")       = "abc"
+   * TextHelper.chomp("abc\r\n")     = "abc"
+   * TextHelper.chomp("abc\r\n\r\n") = "abc\r\n"
+   * TextHelper.chomp("abc\n\r")     = "abc\n"
+   * TextHelper.chomp("abc\n\rabc")  = "abc\n\rabc"
+   * TextHelper.chomp("\r")          = ""
+   * TextHelper.chomp("\n")          = ""
+   * TextHelper.chomp("\r\n")        = ""
+   * </pre>
+   */
+  public static String chomp(final String source) {
+    int index = -1;
+    final String last = at(source, index);
+
+    if (!"\r".equals(last) && !"\n".equals(last)) {
+      return source;
+    }
+
+    if ("\n".equals(last) && "\r".equals(at(source, -2))) {
+      index--;
+    }
+
+    return sub(source, --index, -Integer.MAX_VALUE);
   }
 
 }
