@@ -1183,7 +1183,8 @@ public final class TextHelper {
    *          original string
    * @param odd
    *          string to be removed
-   * @parm place 0清除两侧，负数清除左侧，正数清除右侧
+   * @param place
+   *          0清除两侧，负数清除左侧，正数清除右侧
    * @return processed string
    */
   public static String trim(final String source, final String odd, final int place) {
@@ -1260,7 +1261,7 @@ public final class TextHelper {
    *          清除多余空格
    * @param singleSpace
    *          清除多余空格时，保留一个空格
-   * @return
+   * @return processed string
    */
   public static String pure(final String source, boolean clean, boolean singleSpace) {
     String pureString = source.replaceAll(PatternProvider.HTML_STRIP, "");
@@ -1293,6 +1294,10 @@ public final class TextHelper {
    * TextHelper.chomp("\n")          = ""
    * TextHelper.chomp("\r\n")        = ""
    * </pre>
+   * 
+   * @param source
+   *          original string
+   * @return processed string
    */
   public static String chomp(final String source) {
     int index = -1;
