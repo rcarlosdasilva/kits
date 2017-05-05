@@ -198,10 +198,6 @@ public class HttpHelper {
     } catch (IOException ex) {
       ex.printStackTrace();
       return null;
-    } finally {
-      if (response != null) {
-        response.close();
-      }
     }
   }
 
@@ -261,10 +257,6 @@ public class HttpHelper {
     } catch (IOException ex) {
       ex.printStackTrace();
       return null;
-    } finally {
-      if (response != null) {
-        response.close();
-      }
     }
   }
 
