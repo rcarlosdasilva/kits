@@ -1,4 +1,4 @@
-package io.github.rcarlosdasilva.kits.file;
+package io.github.rcarlosdasilva.kits.io;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -35,7 +35,7 @@ public class BeanCopyHelper {
     for (Object source : sources) {
       targets.add(copyBean(clazz, source));
     }
-    return null;
+    return targets;
   }
 
   /**

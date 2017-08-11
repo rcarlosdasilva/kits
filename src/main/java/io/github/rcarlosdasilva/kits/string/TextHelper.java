@@ -1086,7 +1086,7 @@ public final class TextHelper {
             if (input == null) {
               return "";
             }
-            return upperFirst(input.toLowerCase());
+            return upperFirst(input);
           }
 
         });
