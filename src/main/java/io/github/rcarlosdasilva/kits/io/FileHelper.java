@@ -3,11 +3,15 @@ package io.github.rcarlosdasilva.kits.io;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
 
@@ -15,6 +19,7 @@ import io.github.rcarlosdasilva.kits.net.HttpHelper;
 import io.github.rcarlosdasilva.kits.net.http.ContentType;
 import io.github.rcarlosdasilva.kits.net.http.HttpMethod;
 import io.github.rcarlosdasilva.kits.net.http.ResponseDigest;
+import io.github.rcarlosdasilva.kits.string.TextHelper;
 
 /**
  * 文件助手
@@ -23,10 +28,44 @@ import io.github.rcarlosdasilva.kits.net.http.ResponseDigest;
  */
 public class FileHelper {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(FileHelper.class);
+
   private static final String HTTP_SCHEME = "http";
   private static final String HTTPS_SCHEME = "https";
   private static final String FILE_SCHEME = "file";
   private static final String FTP_SCHEME = "ftp";
+
+  private FileHelper() {
+    throw new IllegalStateException("FileHelper class");
+  }
+
+  public static FileHeaderSign type(InputStream is) {
+    final String header = readFileHeader(is);
+
+    if (header == null || header.length() == 0) {
+      return null;
+    }
+
+    return FileHeaderSign.byValue(header);
+  }
+
+  private static String readFileHeader(InputStream is) {
+    byte[] header = new byte[28];
+
+    try {
+      if (is.markSupported()) {
+        is.mark(32);
+      }
+      is.read(header, 0, 28);
+      if (is.markSupported()) {
+        is.reset();
+      }
+      return TextHelper.toHexString(header);
+    } catch (IOException ex) {
+      LOGGER.error("", ex);
+    }
+    return null;
+  }
 
   public static boolean copy(String from, String to) {
     try {
@@ -112,13 +151,14 @@ public class FileHelper {
   }
 
   public static void main(String[] args) throws URISyntaxException, MalformedURLException {
-//    URL aURL = new URL(
-//        "http://example.com:80/docs/books/tutorial" + "/index.html?name=networking#DOWNLOADING");
-//    // URL a = new URL("‪D:\\123.jpg");
-//    URL b = new URL("‪http://www.math.uio/faq/compression-faq/part1.html");
-//    URL c = new URL("‪..\\abc.js");
-//    URL d = new URL("‪./zz.jsl");
-//    URL e = new URL("‪/mnt/zz.jsl");
+    // URL aURL = new URL(
+    // "http://example.com:80/docs/books/tutorial" +
+    // "/index.html?name=networking#DOWNLOADING");
+    // // URL a = new URL("‪D:\\123.jpg");
+    // URL b = new URL("‪http://www.math.uio/faq/compression-faq/part1.html");
+    // URL c = new URL("‪..\\abc.js");
+    // URL d = new URL("‪./zz.jsl");
+    // URL e = new URL("‪/mnt/zz.jsl");
     // copy("‪D:\\123.jpg", "D:\\testcopy\\a01.json");
   }
 

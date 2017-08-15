@@ -18,7 +18,7 @@ public class JustEncryption {
     final String[] chips = { identifier, password, salt, String.valueOf(time) };
     final int serial = RAND.nextInt(4);
     final String signature = signature(chips, serial);
-
+    System.out.println(signature);
     return null;
   }
 

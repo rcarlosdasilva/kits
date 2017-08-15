@@ -1314,4 +1314,21 @@ public final class TextHelper {
     return sub(source, --index, -Integer.MAX_VALUE);
   }
 
+  public static String toHexString(byte[] bytes) {
+    if (bytes == null || bytes.length <= 0) {
+      return null;
+    }
+
+    StringBuilder result = new StringBuilder();
+    for (int i = 0; i < bytes.length; i++) {
+      int v = bytes[i] & 0xFF;
+      String hv = Integer.toHexString(v);
+      if (hv.length() < 2) {
+        result.append(0);
+      }
+      result.append(hv);
+    }
+    return result.toString();
+  }
+
 }
