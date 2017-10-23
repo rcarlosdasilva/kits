@@ -1,6 +1,7 @@
 package io.github.rcarlosdasilva.kits.string;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 
 import com.google.common.base.Ascii;
@@ -84,7 +85,30 @@ public final class TextHelper {
    *          separator
    * @return processed string
    */
+  @Deprecated
   public static String concat(final String[] parts, String separator) {
+    if (Strings.isNullOrEmpty(separator)) {
+      return concat(parts);
+    }
+
+    return Joiner.on(separator).join(clean(parts, true));
+  }
+
+  /**
+   * 拼接多个字符串，之间用separator间隔.
+   * 
+   * <pre>
+   * // return "1::2:3";
+   * TextHelper.concat(":", "1", "", "2", null, "3");
+   * </pre>
+   * 
+   * @param separator
+   *          separator
+   * @param parts
+   *          an array of strings to joint
+   * @return processed string
+   */
+  public static String join(String separator, final String... parts) {
     if (Strings.isNullOrEmpty(separator)) {
       return concat(parts);
     }
@@ -111,7 +135,35 @@ public final class TextHelper {
    *          separator
    * @return processed string
    */
+  @Deprecated
   public static String concat(final Iterable<String> parts, String separator) {
+    if (Strings.isNullOrEmpty(separator)) {
+      return concat(parts);
+    }
+
+    return Joiner.on(separator).join(clean(parts, true));
+  }
+
+  /**
+   * 拼接多个字符串，之间用separator间隔.
+   * 
+   * <pre>
+   * List strings = new ArrayList();
+   * strings.add("1");
+   * strings.add("");
+   * strings.add("2");
+   * strings.add(null);
+   * strings.add("3");
+   * TextHelper.join(":", strings); // return "1::2:3";
+   * </pre>
+   * 
+   * @param parts
+   *          an array of strings to joint
+   * @param separator
+   *          separator
+   * @return processed string
+   */
+  public static String join(String separator, final Iterable<String> parts) {
     if (Strings.isNullOrEmpty(separator)) {
       return concat(parts);
     }
@@ -631,14 +683,53 @@ public final class TextHelper {
    * @return boolean
    */
   public static boolean startsWith(final String source, final String... prefixCollection) {
-    if (source != null && prefixCollection != null && prefixCollection.length > 0) {
+    return startsWhich(source, prefixCollection) != null;
+  }
+
+  /**
+   * 判断字符串是否是以给定的字符串集合中任意一个前缀开头.
+   * 
+   * @param source
+   *          original string
+   * @param prefixCollection
+   *          prefix collection
+   * @return boolean
+   */
+  public static boolean startsWith(final String source, final List<String> prefixCollection) {
+    return startsWhich(source, prefixCollection) != null;
+  }
+
+  /**
+   * 判断字符串是否是以给定的字符串集合中任意一个前缀开头.
+   * 
+   * @param source
+   *          original string
+   * @param prefixCollection
+   *          prefix collection
+   * @return boolean
+   */
+  public static String startsWhich(final String source, final String... prefixCollection) {
+    return startsWhich(source, Lists.newArrayList(prefixCollection));
+  }
+
+  /**
+   * 判断字符串是否是以给定的字符串集合中任意一个前缀开头.
+   * 
+   * @param source
+   *          original string
+   * @param prefixCollection
+   *          prefix collection
+   * @return boolean
+   */
+  public static String startsWhich(final String source, final List<String> prefixCollection) {
+    if (source != null && prefixCollection != null && !prefixCollection.isEmpty()) {
       for (String prefix : prefixCollection) {
         if (source.startsWith(prefix)) {
-          return true;
+          return prefix;
         }
       }
     }
-    return false;
+    return null;
   }
 
   /**

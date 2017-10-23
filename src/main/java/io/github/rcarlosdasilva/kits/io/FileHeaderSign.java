@@ -2,6 +2,8 @@ package io.github.rcarlosdasilva.kits.io;
 
 /**
  * 文件头标识
+ * <p>
+ * 参考 http://www.garykessler.net/library/file_sigs.html
  * 
  * @author <a href="mailto:rcarlosdasilva@qq.com">Dean Zhao</a>
  */
@@ -55,7 +57,7 @@ public enum FileHeaderSign {
   /**
    * HTML.
    */
-  HTML("68746D6C3E"),
+  HTML("3c21"),
 
   /**
    * Email [thorough only].
@@ -143,14 +145,29 @@ public enum FileHeaderSign {
   MPG("000001BA"),
 
   /**
+   * MP3.
+   */
+  MP3("494433"),
+
+  /**
+   * MP4.
+   */
+  MP4("66747970"),
+
+  /**
    * Quicktime.
    */
   MOV("6D6F6F76"),
 
   /**
-   * Windows Media.
+   * FLV.
    */
-  ASF("3026B2758E66CF11"),
+  FLV("464C5601"),
+
+  /**
+   * Microsoft Windows Media Audio/Video File.
+   */
+  WMAV("3026B2758E66CF11"),
 
   /**
    * MIDI.

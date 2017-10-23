@@ -40,10 +40,18 @@ public class FileHelper {
   }
 
   public static FileHeaderSign type(InputStream is) {
-    final String header = readFileHeader(is);
+    String header = readFileHeader(is);
 
     if (header == null || header.length() == 0) {
       return null;
+    }
+
+    // mp4文件头，有以00 00 00 1? 开头和另一种4位偏移量的形式，参考文档
+    // http://www.garykessler.net/library/file_sigs.html
+    // 例子： (MP4 - ftypmp42)
+    // 00 00 00 18 66 74 79 70 6D 70 34 32 和 66 74 79 70 6D 70 34 32
+    if (header.startsWith("0000001")) {
+      header = header.substring(8);
     }
 
     return FileHeaderSign.byValue(header);
