@@ -123,7 +123,7 @@ public class AddressHelper {
     if (Strings.isNullOrEmpty(ip)) {
       ip = request.getRemoteAddr();
     }
-    return null;
+    return ip;
   }
 
   /**

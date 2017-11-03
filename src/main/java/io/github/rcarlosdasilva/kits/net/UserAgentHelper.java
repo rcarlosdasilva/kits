@@ -52,7 +52,7 @@ public class UserAgentHelper {
     throw new IllegalArgumentException("Invalid string for userAgent " + name);
   }
 
-  static class UserAgent {
+  public static class UserAgent {
     private OperatingSystem operatingSystem;
     private Browser browser;
     private int id;
@@ -108,7 +108,7 @@ public class UserAgentHelper {
     }
 
     /**
-     * Returns an unique integer value of the operating system & browser
+     * Returns an unique integer value of the operating system and browser
      * combination
      * 
      * @return the id

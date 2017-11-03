@@ -76,29 +76,6 @@ public final class TextHelper {
    * 
    * <pre>
    * // return "1::2:3";
-   * TextHelper.concat(new String[] { "1", "", "2", null, "3" }, ":");
-   * </pre>
-   * 
-   * @param parts
-   *          an array of strings to joint
-   * @param separator
-   *          separator
-   * @return processed string
-   */
-  @Deprecated
-  public static String concat(final String[] parts, String separator) {
-    if (Strings.isNullOrEmpty(separator)) {
-      return concat(parts);
-    }
-
-    return Joiner.on(separator).join(clean(parts, true));
-  }
-
-  /**
-   * 拼接多个字符串，之间用separator间隔.
-   * 
-   * <pre>
-   * // return "1::2:3";
    * TextHelper.concat(":", "1", "", "2", null, "3");
    * </pre>
    * 
@@ -109,34 +86,6 @@ public final class TextHelper {
    * @return processed string
    */
   public static String join(String separator, final String... parts) {
-    if (Strings.isNullOrEmpty(separator)) {
-      return concat(parts);
-    }
-
-    return Joiner.on(separator).join(clean(parts, true));
-  }
-
-  /**
-   * 拼接多个字符串，之间用separator间隔.
-   * 
-   * <pre>
-   * List strings = new ArrayList();
-   * strings.add("1");
-   * strings.add("");
-   * strings.add("2");
-   * strings.add(null);
-   * strings.add("3");
-   * TextHelper.concat(strings, ":"); // return "1::2:3";
-   * </pre>
-   * 
-   * @param parts
-   *          an array of strings to joint
-   * @param separator
-   *          separator
-   * @return processed string
-   */
-  @Deprecated
-  public static String concat(final Iterable<String> parts, String separator) {
     if (Strings.isNullOrEmpty(separator)) {
       return concat(parts);
     }
@@ -169,53 +118,6 @@ public final class TextHelper {
     }
 
     return Joiner.on(separator).join(clean(parts, true));
-  }
-
-  @Deprecated
-  public static String joint(final String... parts) {
-    return joint(null, parts);
-  }
-
-  /**
-   * 拼接字符串.
-   * 
-   * <pre>
-   * TextHelper.joint("num", new String[] { "1", "2", "3" })); // return "num123";
-   * </pre>
-   * 
-   * @param source
-   *          original string
-   * @param parts
-   *          an array of strings to joint
-   * @return processed string
-   */
-  @Deprecated
-  public static String joint(final String source, final String[] parts) {
-    if (parts == null || parts.length == 0) {
-      return source;
-    }
-
-    if (source == null) {
-      return NON_SEPARATOR_JOINER.join(parts);
-    } else {
-      return source + NON_SEPARATOR_JOINER.join(parts);
-    }
-  }
-
-  /**
-   * 拼接字符串
-   * 
-   * <pre>
-   * TextHelper.joint(new String[] { "1", "2", "3" }); // return "123";
-   * </pre>
-   * 
-   * @param parts
-   *          an array of strings to joint
-   * @return processed string
-   */
-  @Deprecated
-  public static String jointArray(final String[] parts) {
-    return joint(null, parts);
   }
 
   /**
@@ -808,7 +710,7 @@ public final class TextHelper {
     }
 
     int absPosition = index >= 0 ? index : source.length() + index;
-    return joint(source.substring(0, absPosition), part, source.substring(absPosition));
+    return concat(source.substring(0, absPosition), part, source.substring(absPosition));
   }
 
   /**
@@ -1127,7 +1029,7 @@ public final class TextHelper {
       return null;
     }
 
-    return source.replace(looking4, joint(prefix, looking4, suffix));
+    return source.replace(looking4, concat(prefix, looking4, suffix));
   }
 
   /**
