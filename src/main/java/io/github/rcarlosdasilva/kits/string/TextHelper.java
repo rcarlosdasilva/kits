@@ -409,7 +409,7 @@ public final class TextHelper {
       return false;
     }
 
-    String sourceCopy = source.toLowerCase();
+    final String sourceCopy = source.toLowerCase();
     return Iterables.all(Lists.newArrayList(looking4), new Predicate<String>() {
 
       @Override
@@ -471,7 +471,7 @@ public final class TextHelper {
       return false;
     }
 
-    String sourceCopy = source.toLowerCase();
+    final String sourceCopy = source.toLowerCase();
     return Iterables.any(Lists.newArrayList(looking4), new Predicate<String>() {
 
       @Override

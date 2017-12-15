@@ -9,11 +9,16 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Ordering;
 
 import io.github.rcarlosdasilva.kits.net.HttpHelper;
 import io.github.rcarlosdasilva.kits.net.http.ContentType;
@@ -22,7 +27,7 @@ import io.github.rcarlosdasilva.kits.net.http.ResponseDigest;
 import io.github.rcarlosdasilva.kits.string.TextHelper;
 
 /**
- * 文件助手
+ * 文件工具
  * 
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
@@ -34,46 +39,111 @@ public class FileHelper {
   private static final String HTTPS_SCHEME = "https";
   private static final String FILE_SCHEME = "file";
   private static final String FTP_SCHEME = "ftp";
+  private static final FileSignatures NONE_FILE_SIGNATURE = FileSignatures.NON;
+
+  private static final List<FileSignatures> fsCache;
+
+  static {
+    List<FileSignatures> temp = Lists.newArrayList(FileSignatures.values());
+    temp.sort(new Ordering<FileSignatures>() {
+
+      @Override
+      public int compare(FileSignatures left, FileSignatures right) {
+        if (left.getPosition() == right.getPosition()) {
+          return right.getPattern().length() - left.getPattern().length();
+        }
+        return left.getPosition() - right.getPosition();
+      }
+
+    });
+    fsCache = ImmutableList.copyOf(temp);
+  }
 
   private FileHelper() {
     throw new IllegalStateException("FileHelper class");
   }
 
-  public static FileHeaderSign type(InputStream is) {
-    String header = readFileHeader(is);
+  public static FileSignatures type(String path) {
+    Preconditions.checkNotNull(path);
 
-    if (header == null || header.length() == 0) {
-      return null;
+    Optional<File> file = from(path);
+    if (file.isPresent()) {
+      return type(file.get());
     }
-
-    // mp4文件头，有以00 00 00 1? 开头和另一种4位偏移量的形式，参考文档
-    // http://www.garykessler.net/library/file_sigs.html
-    // 例子： (MP4 - ftypmp42)
-    // 00 00 00 18 66 74 79 70 6D 70 34 32 和 66 74 79 70 6D 70 34 32
-    if (header.startsWith("0000001")) {
-      header = header.substring(8);
-    }
-
-    return FileHeaderSign.byValue(header);
+    LOGGER.warn("找不到文件 - {}", path);
+    return NONE_FILE_SIGNATURE;
   }
 
-  private static String readFileHeader(InputStream is) {
-    byte[] header = new byte[28];
+  public static FileSignatures type(File file) {
+    Preconditions.checkNotNull(file);
 
-    try {
-      if (is.markSupported()) {
-        is.mark(32);
-      }
-      is.read(header, 0, 28);
-      if (is.markSupported()) {
-        is.reset();
-      }
-      return TextHelper.toHexString(header);
-    } catch (IOException ex) {
+    if (!file.exists() || file.isDirectory()) {
+      return NONE_FILE_SIGNATURE;
+    }
+
+    try (InputStream fis = new FileInputStream(file)) {
+      return type(fis);
+    } catch (SecurityException | IOException ex) {
       LOGGER.error("", ex);
     }
-    return null;
+    return NONE_FILE_SIGNATURE;
   }
+
+  public static FileSignatures type(InputStream stream) {
+    int matchedLength = 0;
+    FileSignatures result = NONE_FILE_SIGNATURE;
+    int pos = -1;
+    String hex = "";
+    for (FileSignatures sig : fsCache) {
+      if (sig.getPosition() > pos) {
+        pos = sig.getPosition();
+        try {
+          byte[] bytes = StreamHelper.readBytes(stream,
+              pos + FileSignatures.MAX_PATTERN_CHARACTER_LENGTH / 2);
+          if (bytes.length <= 0) {
+            break;
+          }
+          hex = TextHelper.toHexString(bytes);
+          hex = hex.substring(pos).toUpperCase();
+        } catch (Exception ex) {
+          LOGGER.error("", ex);
+          break;
+        }
+      }
+
+      if (hex.startsWith(sig.getPattern())) {
+        if (sig.getPattern().length() > matchedLength) {
+          matchedLength = sig.getPattern().length();
+          result = sig;
+        }
+      }
+    }
+
+    return result;
+  }
+
+  // -----------------------------------------------------------------
+
+  /**
+   * 获取存!在!的!指定资源文件.
+   * <p>
+   * 可按照相对路径获取资源文件，若资源文件不存在，不返回File实例，即只要有File实例，则file.exists()为true
+   * 
+   * @param path
+   *          文件路径（相对或绝对）
+   * @return {@link File}
+   */
+  public static Optional<File> from(String path) {
+    Preconditions.checkNotNull(path);
+
+    File file = new File(path);
+    if (file.exists()) {
+      return Optional.of(file);
+    }
+    return Optional.absent();
+  }
+
+  // ==============================================
 
   public static boolean copy(String from, String to) {
     try {
@@ -156,18 +226,6 @@ public class FileHelper {
       StreamHelper.close(in);
       StreamHelper.close(out);
     }
-  }
-
-  public static void main(String[] args) throws URISyntaxException, MalformedURLException {
-    // URL aURL = new URL(
-    // "http://example.com:80/docs/books/tutorial" +
-    // "/index.html?name=networking#DOWNLOADING");
-    // // URL a = new URL("‪D:\\123.jpg");
-    // URL b = new URL("‪http://www.math.uio/faq/compression-faq/part1.html");
-    // URL c = new URL("‪..\\abc.js");
-    // URL d = new URL("‪./zz.jsl");
-    // URL e = new URL("‪/mnt/zz.jsl");
-    // copy("‪D:\\123.jpg", "D:\\testcopy\\a01.json");
   }
 
 }

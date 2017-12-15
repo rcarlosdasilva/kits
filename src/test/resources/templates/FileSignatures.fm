@@ -1,0 +1,45 @@
+package io.github.rcarlosdasilva.kits.io;
+
+/**
+ * 文件签名
+ * <p>
+ * 内容参考 http://www.garykessler.net/library/file_sigs.html<br>
+ * 数据从TrID_sigs_GCK转换而来，参考https://www.garykessler.net/software/index.html#filesigs
+ * 
+ * 
+ * @author <a href="mailto:rcarlosdasilva@qq.com">Dean Zhao</a>
+ */
+public enum FileSignatures {
+
+  <#list defins as def>
+  /** ${def.Info.FileType} */
+  FILE_NUM_${def.General.FileNum}("${def.FrontBlock.Pattern.Bytes}", ${def.FrontBlock.Pattern.Pos}, "${def.Info.Ext}"),
+  </#list>
+  NON("", 0, "");
+
+  /** FrontBlock -> Pattern -> Bytes */
+  private String pattern;
+  /** FrontBlock -> Pattern -> Pos */
+  private int position;
+  /** Info -> Ext */
+  private String extension;
+
+  private FileSignatures(String pattern, int position, String extension) {
+    this.pattern = pattern;
+    this.position = position;
+    this.extension = extension;
+  }
+
+  public String getPattern() {
+    return pattern;
+  }
+
+  public int getPosition() {
+    return position;
+  }
+
+  public String getExtension() {
+    return extension;
+  }
+
+}

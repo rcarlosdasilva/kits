@@ -80,7 +80,8 @@ public class CollectionsHelper {
       Object key = PropertyHelper.read(source, propertyName);
       if (key != null) {
         if (map.get((K) key) == null) {
-          map.put((K) key, Lists.newArrayList());
+          List<V> value = Lists.newArrayList();
+          map.put((K) key, value);
         }
         map.get((K) key).add((V) source);
       }
@@ -132,7 +133,8 @@ public class CollectionsHelper {
    */
   public static <V> Set<V> listToSetWithSeparate(String propertyName,
       List<? extends Object> sources) {
-    return Sets.newHashSet(listToListWithSeparate(propertyName, sources));
+    List<V> list = listToListWithSeparate(propertyName, sources);
+    return Sets.newHashSet(list);
   }
 
 }
