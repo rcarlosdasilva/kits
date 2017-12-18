@@ -387,6 +387,10 @@ public final class TextHelper {
         return have(source, input);
       }
 
+      @Override
+      public boolean test(String input) {
+        return true;
+      }
     });
   }
 
@@ -420,6 +424,10 @@ public final class TextHelper {
         return false;
       }
 
+      @Override
+      public boolean test(String input) {
+        return true;
+      }
     });
   }
 
@@ -449,6 +457,10 @@ public final class TextHelper {
         return have(source, input);
       }
 
+      @Override
+      public boolean test(String input) {
+        return true;
+      }
     });
   }
 
@@ -482,6 +494,10 @@ public final class TextHelper {
         return false;
       }
 
+      @Override
+      public boolean test(String input) {
+        return true;
+      }
     });
   }
 
@@ -966,6 +982,11 @@ public final class TextHelper {
         } else {
           return input != null && input.trim().length() > 0;
         }
+      }
+
+      @Override
+      public boolean test(String input) {
+        return true;
       }
     });
   }

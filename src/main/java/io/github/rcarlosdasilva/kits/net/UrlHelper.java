@@ -40,11 +40,9 @@ public class UrlHelper {
   /**
    * 转换路径为URI.
    * 
-   * @param location
+   * @param str
    *          字符串路径
    * @return URI
-   * @exception UtilException
-   *              包装URISyntaxException
    */
   public static Optional<URI> uri(String str) {
     Preconditions.checkNotNull(str);

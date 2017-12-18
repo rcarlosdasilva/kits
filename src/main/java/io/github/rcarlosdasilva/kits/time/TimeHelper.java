@@ -142,10 +142,6 @@ public final class TimeHelper {
    * {@link #admitWholeFirstWeek(boolean)}（禁用后默认2015年的第一周为2015-01-05
    * 星期一，如果admitWholeFirstWeek设置为false，2016年的第一周应为 2015-12-28 星期一）
    * 
-   * @param time
-   *          指定时间
-   * @param weeks
-   *          第n周
    * @return {@link DateTime}
    */
   public static DateTime firstWeek() {
@@ -167,10 +163,8 @@ public final class TimeHelper {
    * {@link #admitWholeFirstWeek(boolean)}（禁用后默认2015年的第一周为2015-01-05
    * 星期一，如果admitWholeFirstWeek设置为false，2016年的第一周应为 2015-12-28 星期一）
    * 
-   * @param time
-   *          指定时间
-   * @param weeks
-   *          第n周
+   * @param year
+   *          年
    * @return {@link DateTime}
    */
   public static DateTime firstWeek(int year) {
@@ -194,8 +188,6 @@ public final class TimeHelper {
    * 
    * @param time
    *          指定时间
-   * @param weeks
-   *          第n周
    * @return {@link DateTime}
    */
   public static DateTime firstWeek(DateTime time) {
@@ -238,6 +230,8 @@ public final class TimeHelper {
    * 1. 如果是按照标准的ISO周算法，最后一周的判断依据是，12月31号是否是周一周二周三或周四<br>
    * 2. 否则，默认一年按照52周计算。在admitWholeFirstWeek为true的设置下，第52周很可能会在第二年，这种情况下，会按照51周计算
    * 
+   * @param year
+   *          年
    * @return {@link DateTime}
    */
   public static DateTime lastWeek(int year) {
@@ -286,6 +280,8 @@ public final class TimeHelper {
    * <p>
    * 如果按照标准的ISO周算法时，并且admitWholeFirstWeek为false时，因为一年有52个周零2天或3天（闰年），所以都是53周
    * 
+   * @param year
+   *          年
    * @return weeks
    */
   public static int weeksIn(int year) {
@@ -438,8 +434,6 @@ public final class TimeHelper {
    * <p>
    * 即周一和周日不在同一年
    * 
-   * @param time
-   *          {@link DateTime}
    * @return boolean
    */
   public static boolean weekSpansTwoYear() {
