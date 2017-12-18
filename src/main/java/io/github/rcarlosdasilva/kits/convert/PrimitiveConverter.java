@@ -1,5 +1,10 @@
 package io.github.rcarlosdasilva.kits.convert;
 
+import java.util.Map;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+
 import io.github.rcarlosdasilva.kits.able.Convertible;
 import io.github.rcarlosdasilva.kits.convert.primitive.BooleanConverter;
 import io.github.rcarlosdasilva.kits.convert.primitive.ByteConverter;
@@ -10,41 +15,45 @@ import io.github.rcarlosdasilva.kits.convert.primitive.IntegerConverter;
 import io.github.rcarlosdasilva.kits.convert.primitive.LongConverter;
 import io.github.rcarlosdasilva.kits.convert.primitive.ShortConverter;
 
-public class PrimitiveConverter {
+public final class PrimitiveConverter<T> implements Convertible<Object, T> {
 
-  private static final BooleanConverter BOOLEAN_CONVERTER = new BooleanConverter();
-  private static final ByteConverter BYTE_CONVERTER = new ByteConverter();
-  private static final CharacterConverter CHARACTER_CONVERTER = new CharacterConverter();
-  private static final DoubleConverter DOUBLE_CONVERTER = new DoubleConverter();
-  private static final FloatConverter FLOAT_CONVERTER = new FloatConverter();
-  private static final IntegerConverter INTEGER_CONVERTER = new IntegerConverter();
-  private static final LongConverter LONG_CONVERTER = new LongConverter();
-  private static final ShortConverter SHORT_CONVERTER = new ShortConverter();
+  private static final Map<Class<?>, PrimitiveConverter<?>> INSTANCES;
+  private final Convertible<Object, T> internal;
 
-  private PrimitiveConverter() {
-    throw new IllegalStateException("PrimitiveConverter class");
+  static {
+    Map<Class<?>, PrimitiveConverter<?>> tmp = Maps.newHashMap();
+    tmp.put(Boolean.class, new PrimitiveConverter<>(new BooleanConverter()));
+    tmp.put(Byte.class, new PrimitiveConverter<>(new ByteConverter()));
+    tmp.put(Character.class, new PrimitiveConverter<>(new CharacterConverter()));
+    tmp.put(Double.class, new PrimitiveConverter<>(new DoubleConverter()));
+    tmp.put(Float.class, new PrimitiveConverter<>(new FloatConverter()));
+    tmp.put(Integer.class, new PrimitiveConverter<>(new IntegerConverter()));
+    tmp.put(Long.class, new PrimitiveConverter<>(new LongConverter()));
+    tmp.put(Short.class, new PrimitiveConverter<>(new ShortConverter()));
+    INSTANCES = ImmutableMap.copyOf(tmp);
+  }
+
+  private PrimitiveConverter(Convertible<Object, T> internal) {
+    this.internal = internal;
   }
 
   @SuppressWarnings("unchecked")
-  public static <T> Convertible<Object, T> of(Class<T> clazz) {
-    if (clazz == Boolean.class) {
-      return (Convertible<Object, T>) BOOLEAN_CONVERTER;
-    } else if (clazz == Byte.class) {
-      return (Convertible<Object, T>) BYTE_CONVERTER;
-    } else if (clazz == Character.class) {
-      return (Convertible<Object, T>) CHARACTER_CONVERTER;
-    } else if (clazz == Double.class) {
-      return (Convertible<Object, T>) DOUBLE_CONVERTER;
-    } else if (clazz == Float.class) {
-      return (Convertible<Object, T>) FLOAT_CONVERTER;
-    } else if (clazz == Integer.class) {
-      return (Convertible<Object, T>) INTEGER_CONVERTER;
-    } else if (clazz == Long.class) {
-      return (Convertible<Object, T>) LONG_CONVERTER;
-    } else if (clazz == Short.class) {
-      return (Convertible<Object, T>) SHORT_CONVERTER;
+  public static <T> PrimitiveConverter<T> of(Class<T> clazz) {
+    PrimitiveConverter<?> instance = INSTANCES.get(clazz);
+    if (instance == null) {
+      throw new IllegalArgumentException();
     }
-    return null;
+    return (PrimitiveConverter<T>) instance;
+  }
+
+  @Override
+  public T convert(Object original) {
+    return internal.convert(original);
+  }
+
+  @Override
+  public T convert(Object original, T defaultValue) {
+    return internal.convert(original, defaultValue);
   }
 
 }
