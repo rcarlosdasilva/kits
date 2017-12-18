@@ -6,6 +6,11 @@ import java.net.URL;
 
 import io.github.rcarlosdasilva.kits.able.Convertible;
 
+/**
+ * URL转换
+ * 
+ * @author <a href="mailto:rcarlosdasilva@qq.com">Dean Zhao</a>
+ */
 public class UrlConverter implements Convertible<Object, URL> {
 
   @Override

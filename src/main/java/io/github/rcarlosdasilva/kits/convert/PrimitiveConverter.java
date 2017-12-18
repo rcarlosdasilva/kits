@@ -15,6 +15,11 @@ import io.github.rcarlosdasilva.kits.convert.primitive.IntegerConverter;
 import io.github.rcarlosdasilva.kits.convert.primitive.LongConverter;
 import io.github.rcarlosdasilva.kits.convert.primitive.ShortConverter;
 
+/**
+ * JDK基本类型转换
+ * 
+ * @author <a href="mailto:rcarlosdasilva@qq.com">Dean Zhao</a>
+ */
 public final class PrimitiveConverter<T> implements Convertible<Object, T> {
 
   private static final Map<Class<?>, PrimitiveConverter<?>> INSTANCES;
@@ -37,8 +42,19 @@ public final class PrimitiveConverter<T> implements Convertible<Object, T> {
     this.internal = internal;
   }
 
+  /**
+   * 指定转换类型.
+   * 
+   * @param <T>
+   *          转换类型
+   * @param clazz
+   *          基本类型
+   * @return {@link PrimitiveConverter}
+   * @throws IllegalArgumentException
+   *           如果 clazz不是基本类型
+   */
   @SuppressWarnings("unchecked")
-  public static <T> PrimitiveConverter<T> of(Class<T> clazz) {
+  public static <T> PrimitiveConverter<T> of(Class<T> clazz) throws IllegalArgumentException {
     PrimitiveConverter<?> instance = INSTANCES.get(clazz);
     if (instance == null) {
       throw new IllegalArgumentException();
