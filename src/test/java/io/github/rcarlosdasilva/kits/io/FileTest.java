@@ -3,12 +3,14 @@ package io.github.rcarlosdasilva.kits.io;
 import java.util.Arrays;
 
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FileTest {
 
+  @Ignore
   @Test
   public void test1() {
     FileSignatures fs0 = FileHelper.type("d:\\tmp\\【微矩阵】大日程_2017.xlsx");
