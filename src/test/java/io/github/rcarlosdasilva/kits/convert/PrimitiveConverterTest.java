@@ -1,4 +1,4 @@
-package io.github.rcarlosdasilva.kits.converter;
+package io.github.rcarlosdasilva.kits.convert;
 
 import org.junit.Assert;
 import org.junit.Test;
