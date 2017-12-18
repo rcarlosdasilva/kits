@@ -66,5 +66,13 @@ public class PatternProvider {
    * 国内邮编
    */
   public static final String POSTCODE = "^[1-9]\\d{5}$";
+  /**
+   * 纯数字
+   */
+  public static final String NUMBER = "^-?\\d+$";
+  /**
+   * 纯数字
+   */
+  public static final String NUMBER_DOT = "^-?\\d*\\.\\d+$";
 
 }

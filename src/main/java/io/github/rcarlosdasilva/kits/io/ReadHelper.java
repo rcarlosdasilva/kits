@@ -29,6 +29,11 @@ public class ReadHelper {
     public String convert(String original) {
       return original;
     }
+
+    @Override
+    public String convert(String original, String defaultValue) {
+      return defaultValue;
+    }
   };
 
   public static List<String> read(File file) throws IOException {

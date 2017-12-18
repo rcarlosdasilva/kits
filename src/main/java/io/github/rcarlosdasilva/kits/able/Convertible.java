@@ -4,4 +4,6 @@ public interface Convertible<F, T> {
 
   T convert(F original);
 
+  T convert(F original, T defaultValue);
+
 }
