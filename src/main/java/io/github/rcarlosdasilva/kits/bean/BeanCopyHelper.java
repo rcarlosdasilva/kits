@@ -1,12 +1,12 @@
 package io.github.rcarlosdasilva.kits.bean;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
+
 import java.beans.PropertyDescriptor;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 
 /**
  * Bean转换
@@ -17,16 +17,13 @@ public class BeanCopyHelper {
 
   /**
    * 将多个源，拷贝属性形成新的目标对象集合.
-   * 
-   * @param <T>
-   *          type
-   * @param clazz
-   *          class type
-   * @param sources
-   *          拷贝源集合
+   *
+   * @param <T>     type
+   * @param clazz   class type
+   * @param sources 拷贝源集合
    * @return 目标对象集合
    */
-  public static <T> List<T> copyBeanList(Class<T> clazz, List<Object> sources) {
+  public static <T> List<T> copyBeanList(Class<T> clazz, List<?> sources) {
     if (sources == null || sources.size() == 0) {
       return Collections.emptyList();
     }
@@ -40,15 +37,11 @@ public class BeanCopyHelper {
 
   /**
    * 将传入的多个源sources中的属性，覆盖入给定的targt对象（注：多个源中的属性如果有重复，会按顺序被最后的源覆盖）.
-   * 
-   * @param <T>
-   *          type
-   * @param clazz
-   *          class type
-   * @param target
-   *          已有目标对象
-   * @param sources
-   *          拷贝源
+   *
+   * @param <T>     type
+   * @param clazz   class type
+   * @param target  已有目标对象
+   * @param sources 拷贝源
    * @return 目标对象
    */
   public static <T> T copyBeans(Class<T> clazz, T target, Object... sources) {
@@ -63,13 +56,10 @@ public class BeanCopyHelper {
 
   /**
    * 将传入的多个源sources中的属性，拷贝到一个新创建的目标对象中（注：多个源中的属性如果有重复，会按顺序被最后的源覆盖）.
-   * 
-   * @param <T>
-   *          type
-   * @param clazz
-   *          class type
-   * @param sources
-   *          拷贝源
+   *
+   * @param <T>     type
+   * @param clazz   class type
+   * @param sources 拷贝源
    * @return 目标对象
    */
   public static <T> T copyBeans(Class<T> clazz, Object... sources) {
@@ -83,15 +73,11 @@ public class BeanCopyHelper {
 
   /**
    * 将source的属性覆盖入给定的targt对象.
-   * 
-   * @param <T>
-   *          type
-   * @param clazz
-   *          class type
-   * @param target
-   *          已有目标对象
-   * @param source
-   *          拷贝源
+   *
+   * @param <T>    type
+   * @param clazz  class type
+   * @param target 已有目标对象
+   * @param source 拷贝源
    * @return 目标对象
    */
   public static <T> T copyBean(Class<T> clazz, T target, Object source) {
@@ -99,8 +85,7 @@ public class BeanCopyHelper {
     Preconditions.checkNotNull(target);
 
     if (source instanceof Map) {
-      @SuppressWarnings("unchecked")
-      final Map<String, Object> propMap = (Map<String, Object>) source;
+      @SuppressWarnings("unchecked") final Map<String, Object> propMap = (Map<String, Object>) source;
 
       for (final Map.Entry<String, Object> entry : propMap.entrySet()) {
         final String name = entry.getKey();
@@ -123,13 +108,10 @@ public class BeanCopyHelper {
 
   /**
    * 将source的属性拷贝到一个新创建的目标对象中.
-   * 
-   * @param <T>
-   *          type
-   * @param clazz
-   *          class type
-   * @param source
-   *          拷贝源
+   *
+   * @param <T>    type
+   * @param clazz  class type
+   * @param source 拷贝源
    * @return 目标对象
    */
   public static <T> T copyBean(Class<T> clazz, Object source) {

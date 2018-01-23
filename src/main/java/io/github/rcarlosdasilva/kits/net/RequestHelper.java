@@ -9,9 +9,8 @@ public class RequestHelper {
 
   /**
    * 判断是否是Ajax请求
-   * 
-   * @param request
-   *          request
+   *
+   * @param request request
    * @return boolean
    */
   public static boolean isAjax(HttpServletRequest request) {
@@ -21,9 +20,8 @@ public class RequestHelper {
 
   /**
    * 判断是否像是Ajax请求（头信息不区分大消息）
-   * 
-   * @param request
-   *          request
+   *
+   * @param request request
    * @return boolean
    */
   public static boolean likeAjax(HttpServletRequest request) {

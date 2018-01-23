@@ -1,16 +1,16 @@
 package io.github.rcarlosdasilva.kits.json;
 
+import com.google.common.base.Strings;
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import com.google.common.base.Strings;
-import com.google.gson.Gson;
-
 /**
  * JSON工具的Gson实现
- * 
+ *
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
 public class GsonHelper implements JsonHelper {

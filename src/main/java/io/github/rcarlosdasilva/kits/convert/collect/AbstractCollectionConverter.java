@@ -1,12 +1,12 @@
 package io.github.rcarlosdasilva.kits.convert.collect;
 
+import io.github.rcarlosdasilva.kits.able.Convertible;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
-import io.github.rcarlosdasilva.kits.able.Convertible;
 
 public abstract class AbstractCollectionConverter<F extends Map<K, V>, T extends Collection<C>, K, V, C>
     implements Convertible<F, T> {
@@ -50,7 +50,7 @@ public abstract class AbstractCollectionConverter<F extends Map<K, V>, T extends
 
   /**
    * 结果实现类型实例.
-   * 
+   *
    * @return instance of {@link Collection}
    */
   public abstract T collectionInstance();

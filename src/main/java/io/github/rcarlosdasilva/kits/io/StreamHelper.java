@@ -1,25 +1,14 @@
 package io.github.rcarlosdasilva.kits.io;
 
-import java.io.Closeable;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
+import com.google.common.base.Preconditions;
+import io.github.rcarlosdasilva.kits.Default;
+
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
-
-import com.google.common.base.Preconditions;
-
-import io.github.rcarlosdasilva.kits.Default;
 
 public class StreamHelper {
 
@@ -29,9 +18,8 @@ public class StreamHelper {
 
   /**
    * 关闭流.
-   * 
-   * @param closed
-   *          closed
+   *
+   * @param closed closed
    */
   public static void close(Closeable closed) {
     if (closed != null) {
@@ -45,13 +33,10 @@ public class StreamHelper {
 
   /**
    * 从输入流读取内容, 写入到输出流中.
-   * 
-   * @param in
-   *          输入
-   * @param out
-   *          输出
-   * @throws IOException
-   *           输入输出异常
+   *
+   * @param in  输入
+   * @param out 输出
+   * @throws IOException 输入输出异常
    */
   public static void io(Reader in, Writer out) throws IOException {
     io(in, out, Default.DEFAULT_STREAM_BUFFER_SIZE);
@@ -59,15 +44,11 @@ public class StreamHelper {
 
   /**
    * 从输入流读取内容, 写入到输出流中. 使用指定大小的缓冲区.
-   * 
-   * @param in
-   *          输入流
-   * @param out
-   *          输出流
-   * @param bufferSize
-   *          缓冲区大小(字节数)
-   * @throws IOException
-   *           输入输出异常
+   *
+   * @param in         输入流
+   * @param out        输出流
+   * @param bufferSize 缓冲区大小(字节数)
+   * @throws IOException 输入输出异常
    */
   public static void io(Reader in, Writer out, int bufferSize) throws IOException {
     Preconditions.checkNotNull(in);
@@ -85,14 +66,10 @@ public class StreamHelper {
 
   /**
    * 从输入流读取内容, 写入到输出流中.
-   * 
-   * @param in
-   *          输入流
-   * @param out
-   *          输出流
-   * 
-   * @throws IOException
-   *           输入输出异常
+   *
+   * @param in  输入流
+   * @param out 输出流
+   * @throws IOException 输入输出异常
    */
   public static void io(InputStream in, OutputStream out) throws IOException {
     io(in, out, Default.DEFAULT_STREAM_BUFFER_SIZE);
@@ -100,16 +77,11 @@ public class StreamHelper {
 
   /**
    * 从输入流读取内容, 写入到输出流中. 使用指定大小的缓冲区.
-   * 
-   * @param in
-   *          输入流
-   * @param out
-   *          输出流
-   * @param bufferSize
-   *          缓冲区大小(字节数)
-   * 
-   * @throws IOException
-   *           输入输出异常
+   *
+   * @param in         输入流
+   * @param out        输出流
+   * @param bufferSize 缓冲区大小(字节数)
+   * @throws IOException 输入输出异常
    */
   public static void io(InputStream in, OutputStream out, int bufferSize) throws IOException {
     Preconditions.checkNotNull(in);
@@ -121,35 +93,29 @@ public class StreamHelper {
 
   /**
    * 非阻塞IO，文件转文件.
-   * 
-   * @param in
-   *          input
-   * @param out
-   *          output
-   * @throws IOException
-   *           输入输出异常
+   *
+   * @param in  input
+   * @param out output
+   * @throws IOException 输入输出异常
    */
   public static void nio(File in, File out) throws IOException {
     Preconditions.checkNotNull(in);
     Preconditions.checkNotNull(out);
 
     try (FileInputStream fis = new FileInputStream(in);
-        FileChannel inChannel = fis.getChannel();
-        FileOutputStream fos = new FileOutputStream(out);
-        FileChannel outChannel = fos.getChannel();) {
+         FileChannel inChannel = fis.getChannel();
+         FileOutputStream fos = new FileOutputStream(out);
+         FileChannel outChannel = fos.getChannel();) {
       inChannel.transferTo(0, inChannel.size(), outChannel);
     }
   }
 
   /**
    * 非阻塞IO，从输入流读取内容, 写入到输出流中.
-   * 
-   * @param in
-   *          input
-   * @param out
-   *          output
-   * @throws IOException
-   *           输入输出异常
+   *
+   * @param in  input
+   * @param out output
+   * @throws IOException 输入输出异常
    */
   public static void nio(InputStream in, OutputStream out) throws IOException {
     nio(in, out, Default.DEFAULT_STREAM_BUFFER_SIZE);
@@ -157,15 +123,11 @@ public class StreamHelper {
 
   /**
    * 非阻塞IO，从输入流读取内容, 写入到输出流中.使用指定大小的缓冲区.
-   * 
-   * @param in
-   *          input
-   * @param out
-   *          output
-   * @param bufferSize
-   *          缓冲区大小(字节数)
-   * @throws IOException
-   *           输入输出异常
+   *
+   * @param in         input
+   * @param out        output
+   * @param bufferSize 缓冲区大小(字节数)
+   * @throws IOException 输入输出异常
    */
   public static void nio(InputStream in, OutputStream out, int bufferSize) throws IOException {
     Preconditions.checkNotNull(in);

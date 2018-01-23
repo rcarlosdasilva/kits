@@ -1,19 +1,14 @@
 package io.github.rcarlosdasilva.kits.string;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
-
-import com.google.common.base.Ascii;
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.base.Predicate;
-import com.google.common.base.Strings;
+import com.google.common.base.*;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-
 import io.github.rcarlosdasilva.kits.convention.PatternProvider;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 
 /**
  * 文本帮助类

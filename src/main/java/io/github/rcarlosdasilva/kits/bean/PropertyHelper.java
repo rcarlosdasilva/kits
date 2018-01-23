@@ -1,12 +1,12 @@
 package io.github.rcarlosdasilva.kits.bean;
 
+import com.google.common.collect.Lists;
+
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
-import com.google.common.collect.Lists;
 
 /**
  * Bean属性助手
@@ -17,9 +17,8 @@ public class PropertyHelper {
 
   /**
    * 获取一个类的所有属性描述.
-   * 
-   * @param clazz
-   *          class type
+   *
+   * @param clazz class type
    * @return 属性描述集合
    */
   public static List<PropertyDescriptor> propertyDescriptors(Class<?> clazz) {
@@ -45,11 +44,9 @@ public class PropertyHelper {
 
   /**
    * 获取一个类中指定属性名的属性描述.
-   * 
-   * @param clazz
-   *          class type
-   * @param propertyName
-   *          属性名
+   *
+   * @param clazz        class type
+   * @param propertyName 属性名
    * @return 属性描述
    */
   public static PropertyDescriptor propertyDescriptor(Class<?> clazz, String propertyName) {
@@ -62,9 +59,8 @@ public class PropertyHelper {
 
   /**
    * 属性是否可写.
-   * 
-   * @param descriptor
-   *          属性描述
+   *
+   * @param descriptor 属性描述
    * @return boolean
    */
   public static boolean isWriteable(PropertyDescriptor descriptor) {
@@ -76,9 +72,8 @@ public class PropertyHelper {
 
   /**
    * 属性是否可读.
-   * 
-   * @param descriptor
-   *          属性描述
+   *
+   * @param descriptor 属性描述
    * @return boolean
    */
   public static boolean isReadable(PropertyDescriptor descriptor) {
@@ -90,13 +85,10 @@ public class PropertyHelper {
 
   /**
    * 根据属性名将值写入对象.
-   * 
-   * @param target
-   *          目标对象
-   * @param propertyName
-   *          属性名
-   * @param value
-   *          值
+   *
+   * @param target       目标对象
+   * @param propertyName 属性名
+   * @param value        值
    * @return boolean
    */
   public static boolean write(Object target, String propertyName, Object value) {
@@ -119,27 +111,21 @@ public class PropertyHelper {
 
   /**
    * 根据属性描述将值写入对象.
-   * 
-   * @param target
-   *          目标对象
-   * @param descriptor
-   *          属性描述
-   * @param value
-   *          值
-   * @exception IllegalAccessException
-   *              if this {@code Method} object is enforcing Java language
-   *              access control and the underlying method is inaccessible.
-   * @exception IllegalArgumentException
-   *              if the method is an instance method and the specified object
-   *              argument is not an instance of the class or interface
-   *              declaring the underlying method (or of a subclass or
-   *              implementor thereof); if the number of actual and formal
-   *              parameters differ; if an unwrapping conversion for primitive
-   *              arguments fails; or if, after possible unwrapping, a parameter
-   *              value cannot be converted to the corresponding formal
-   *              parameter type by a method invocation conversion.
-   * @exception InvocationTargetException
-   *              if the underlying method throws an exception.
+   *
+   * @param target     目标对象
+   * @param descriptor 属性描述
+   * @param value      值
+   * @throws IllegalAccessException    if this {@code Method} object is enforcing Java language
+   *                                   access control and the underlying method is inaccessible.
+   * @throws IllegalArgumentException  if the method is an instance method and the specified object
+   *                                   argument is not an instance of the class or interface
+   *                                   declaring the underlying method (or of a subclass or
+   *                                   implementor thereof); if the number of actual and formal
+   *                                   parameters differ; if an unwrapping conversion for primitive
+   *                                   arguments fails; or if, after possible unwrapping, a parameter
+   *                                   value cannot be converted to the corresponding formal
+   *                                   parameter type by a method invocation conversion.
+   * @throws InvocationTargetException if the underlying method throws an exception.
    */
   public static void write(Object target, PropertyDescriptor descriptor, Object value)
       throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -148,11 +134,9 @@ public class PropertyHelper {
 
   /**
    * 根据属性描述从目标对象中读出.
-   * 
-   * @param source
-   *          目标对象
-   * @param propertyName
-   *          属性名
+   *
+   * @param source       目标对象
+   * @param propertyName 属性名
    * @return 值
    */
   public static Object read(Object source, String propertyName) {
@@ -175,26 +159,21 @@ public class PropertyHelper {
 
   /**
    * 根据属性描述从目标对象中读出.
-   * 
-   * @param source
-   *          目标对象
-   * @param descriptor
-   *          属性描述
+   *
+   * @param source     目标对象
+   * @param descriptor 属性描述
    * @return 值
-   * @exception IllegalAccessException
-   *              if this {@code Method} object is enforcing Java language
-   *              access control and the underlying method is inaccessible.
-   * @exception IllegalArgumentException
-   *              if the method is an instance method and the specified object
-   *              argument is not an instance of the class or interface
-   *              declaring the underlying method (or of a subclass or
-   *              implementor thereof); if the number of actual and formal
-   *              parameters differ; if an unwrapping conversion for primitive
-   *              arguments fails; or if, after possible unwrapping, a parameter
-   *              value cannot be converted to the corresponding formal
-   *              parameter type by a method invocation conversion.
-   * @exception InvocationTargetException
-   *              if the underlying method throws an exception.
+   * @throws IllegalAccessException    if this {@code Method} object is enforcing Java language
+   *                                   access control and the underlying method is inaccessible.
+   * @throws IllegalArgumentException  if the method is an instance method and the specified object
+   *                                   argument is not an instance of the class or interface
+   *                                   declaring the underlying method (or of a subclass or
+   *                                   implementor thereof); if the number of actual and formal
+   *                                   parameters differ; if an unwrapping conversion for primitive
+   *                                   arguments fails; or if, after possible unwrapping, a parameter
+   *                                   value cannot be converted to the corresponding formal
+   *                                   parameter type by a method invocation conversion.
+   * @throws InvocationTargetException if the underlying method throws an exception.
    */
   public static Object read(Object source, PropertyDescriptor descriptor)
       throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {

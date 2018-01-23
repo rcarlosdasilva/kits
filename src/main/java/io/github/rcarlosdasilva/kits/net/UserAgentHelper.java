@@ -7,7 +7,7 @@ import io.github.rcarlosdasilva.kits.net.ua.Version;
 /**
  * User-Agent助手，修改于User-agent-utils
  * 1.20(https://github.com/HaraldWalker/user-agent-utils)
- * 
+ *
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
 public class UserAgentHelper {
@@ -18,9 +18,8 @@ public class UserAgentHelper {
 
   /**
    * Returns UserAgent based on specified unique id
-   * 
-   * @param id
-   *          id
+   *
+   * @param id id
    * @return UserAgent
    */
   public static UserAgent valueOf(int id) {
@@ -31,9 +30,8 @@ public class UserAgentHelper {
 
   /**
    * Returns UserAgent based on combined string representation
-   * 
-   * @param name
-   *          name
+   *
+   * @param name name
    * @return UserAgent
    */
   public static UserAgent valueOf(String name) {
@@ -53,6 +51,7 @@ public class UserAgentHelper {
   }
 
   public static class UserAgent {
+
     private OperatingSystem operatingSystem;
     private Browser browser;
     private int id;
@@ -86,7 +85,7 @@ public class UserAgentHelper {
      * userAgent to be available. Use it only after using UserAgent(String) or
      * UserAgent.parseUserAgent(String). Returns null if it can not detect the
      * version information.
-     * 
+     *
      * @return Version
      */
     public Version getBrowserVersion() {
@@ -110,7 +109,7 @@ public class UserAgentHelper {
     /**
      * Returns an unique integer value of the operating system and browser
      * combination
-     * 
+     *
      * @return the id
      */
     public int getId() {

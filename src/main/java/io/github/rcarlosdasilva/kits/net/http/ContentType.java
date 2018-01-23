@@ -2,7 +2,7 @@ package io.github.rcarlosdasilva.kits.net.http;
 
 /**
  * Content-Type
- * 
+ *
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
 public enum ContentType {

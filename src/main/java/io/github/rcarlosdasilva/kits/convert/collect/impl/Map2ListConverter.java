@@ -1,12 +1,11 @@
 package io.github.rcarlosdasilva.kits.convert.collect.impl;
 
-import java.util.List;
-import java.util.Map;
-
 import com.google.common.collect.Lists;
-
 import io.github.rcarlosdasilva.kits.convert.collect.AbstractCollectionConverter;
 import io.github.rcarlosdasilva.kits.convert.collect.CollectionInternalConverter;
+
+import java.util.List;
+import java.util.Map;
 
 public class Map2ListConverter<K, V, C>
     extends AbstractCollectionConverter<Map<K, V>, List<C>, K, V, C> {

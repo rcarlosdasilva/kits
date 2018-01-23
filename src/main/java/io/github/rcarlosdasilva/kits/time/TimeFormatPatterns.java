@@ -5,7 +5,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 /**
  * 日期时间格式化常用Pattern
- * 
+ *
  * @author <a href="mailto:rcarlosdasilva@qq.com">Dean Zhao</a>
  */
 public final class TimeFormatPatterns {

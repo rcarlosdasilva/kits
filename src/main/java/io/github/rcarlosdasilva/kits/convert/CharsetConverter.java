@@ -1,12 +1,12 @@
 package io.github.rcarlosdasilva.kits.convert;
 
-import java.nio.charset.Charset;
-
 import io.github.rcarlosdasilva.kits.able.Convertible;
+
+import java.nio.charset.Charset;
 
 /**
  * 字符集转换
- * 
+ *
  * @author <a href="mailto:rcarlosdasilva@qq.com">Dean Zhao</a>
  */
 public class CharsetConverter implements Convertible<String, Charset> {

@@ -1,19 +1,13 @@
 package io.github.rcarlosdasilva.kits.io;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.charset.Charset;
-
 import com.google.common.base.Preconditions;
+
+import java.io.*;
+import java.nio.charset.Charset;
 
 /**
  * 写文件助手
- * 
+ *
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
 public class WriteHelper {

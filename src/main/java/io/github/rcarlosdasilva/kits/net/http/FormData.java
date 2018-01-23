@@ -2,7 +2,7 @@ package io.github.rcarlosdasilva.kits.net.http;
 
 /**
  * HTTP请求Form表单内容
- * 
+ *
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
 public class FormData {

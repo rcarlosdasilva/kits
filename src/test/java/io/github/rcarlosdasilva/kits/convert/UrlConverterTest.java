@@ -1,11 +1,11 @@
 package io.github.rcarlosdasilva.kits.convert;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 public class UrlConverterTest {
 

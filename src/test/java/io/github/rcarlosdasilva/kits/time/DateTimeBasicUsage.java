@@ -1,16 +1,24 @@
 package io.github.rcarlosdasilva.kits.time;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Days;
 import org.joda.time.Months;
 import org.joda.time.format.DateTimeFormat;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class DateTimeBasicUsage {
+
+  public static void main(String[] args) {
+    DateTimeBasicUsage usage = new DateTimeBasicUsage();
+    usage.usage1();
+    usage.usage2();
+    usage.usage3();
+    usage.usage4();
+  }
 
   /**
    * 常用{@link DateTime}实例创建
@@ -148,14 +156,6 @@ public class DateTimeBasicUsage {
 
     // 计算年龄
     int age = TimeHelper.age(now);
-  }
-
-  public static void main(String[] args) {
-    DateTimeBasicUsage usage = new DateTimeBasicUsage();
-    usage.usage1();
-    usage.usage2();
-    usage.usage3();
-    usage.usage4();
   }
 
 }

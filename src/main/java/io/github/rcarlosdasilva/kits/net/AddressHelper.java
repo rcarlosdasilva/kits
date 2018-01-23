@@ -1,15 +1,14 @@
 package io.github.rcarlosdasilva.kits.net;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
-
 import io.github.rcarlosdasilva.kits.convention.PatternProvider;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 网络地址工具类
- * 
+ *
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
 public class AddressHelper {
@@ -24,9 +23,8 @@ public class AddressHelper {
 
   /**
    * 获取请求的项目模块路径，以/开头.
-   * 
-   * @param request
-   *          {@link HttpServletRequest}
+   *
+   * @param request {@link HttpServletRequest}
    * @return 相对路径
    */
   public static String getModuleUri(HttpServletRequest request) {
@@ -38,9 +36,8 @@ public class AddressHelper {
 
   /**
    * 获取请求的相对路径，以/开头，不包含项目模块路径.
-   * 
-   * @param request
-   *          {@link HttpServletRequest}
+   *
+   * @param request {@link HttpServletRequest}
    * @return 相对路径
    */
   public static String getRelativeUri(HttpServletRequest request) {
@@ -52,9 +49,8 @@ public class AddressHelper {
 
   /**
    * 获取请求的绝对路径，以/开头，包含项目模块路径.
-   * 
-   * @param request
-   *          {@link HttpServletRequest}
+   *
+   * @param request {@link HttpServletRequest}
    * @return 绝对路径
    */
   public static String getAbsoluteUri(HttpServletRequest request) {
@@ -66,9 +62,8 @@ public class AddressHelper {
 
   /**
    * 判断给定的ip字符串是否合法的IP v4.
-   * 
-   * @param ip
-   *          ip地址
+   *
+   * @param ip ip地址
    * @return 是否合法
    */
   public static boolean isLegalIpv4(String ip) {
@@ -77,9 +72,8 @@ public class AddressHelper {
 
   /**
    * 判断给定的ip字符串是否合法的IP v6.
-   * 
-   * @param ip
-   *          ip地址
+   *
+   * @param ip ip地址
    * @return 是否合法
    */
   public static boolean isLegalIpv6(String ip) {
@@ -88,9 +82,8 @@ public class AddressHelper {
 
   /**
    * 获取远程ip地址.
-   * 
-   * @param request
-   *          {@link HttpServletRequest}
+   *
+   * @param request {@link HttpServletRequest}
    * @return 远程ip
    */
   public static String remoteIp(HttpServletRequest request) {
@@ -128,11 +121,9 @@ public class AddressHelper {
 
   /**
    * 从request.header中获取指定内容.
-   * 
-   * @param request
-   *          {@link HttpServletRequest}
-   * @param key
-   *          键
+   *
+   * @param request {@link HttpServletRequest}
+   * @param key     键
    * @return 内容
    */
   private static String remoteIpFromHeader(HttpServletRequest request, String key) {

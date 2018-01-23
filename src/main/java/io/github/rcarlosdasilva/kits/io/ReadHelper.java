@@ -1,21 +1,16 @@
 package io.github.rcarlosdasilva.kits.io;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
+import io.github.rcarlosdasilva.kits.able.Convertible;
+
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.List;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
-
-import io.github.rcarlosdasilva.kits.able.Convertible;
-
 /**
  * 文件读取助手
- * 
+ *
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
 public class ReadHelper {
@@ -50,7 +45,7 @@ public class ReadHelper {
   }
 
   public static <T> List<T> read(File file, Class<T> clazz, Convertible<String, T> convertible,
-      Charset charset) throws IOException {
+                                 Charset charset) throws IOException {
     Preconditions.checkState(file != null && file.isFile());
     Preconditions.checkNotNull(convertible);
 

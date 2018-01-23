@@ -1,46 +1,33 @@
 package io.github.rcarlosdasilva.kits.net;
 
+import com.google.common.collect.Lists;
+import io.github.rcarlosdasilva.kits.net.http.*;
+import okhttp3.*;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import com.google.common.collect.Lists;
-
-import io.github.rcarlosdasilva.kits.net.http.ContentType;
-import io.github.rcarlosdasilva.kits.net.http.FormData;
-import io.github.rcarlosdasilva.kits.net.http.HttpMethod;
-import io.github.rcarlosdasilva.kits.net.http.MultiFile;
-import io.github.rcarlosdasilva.kits.net.http.ResponseDigest;
-import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
 /**
  * Http请求工具
- * 
+ *
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
 public class HttpHelper {
 
-  private static OkHttpClient client = null;
-  private static final MediaType JSON_TYPE = MediaType.parse("application/json; charset=utf-8");
-  private static final MediaType XML_TYPE = MediaType.parse("application/xml; charset=utf-8");
-  private static final MediaType MULTI_FORM_TYPE = MultipartBody.FORM;
-
   public static final int TIMEOUT_OF_CONNECT_DEFAULT = 5;
   public static final int TIMEOUT_OF_READ_DEFAULT = 60;
   public static final int TIMEOUT_OF_WRITE_DEFAULT = 60;
-
+  private static final MediaType JSON_TYPE = MediaType.parse("application/json; charset=utf-8");
+  private static final MediaType XML_TYPE = MediaType.parse("application/xml; charset=utf-8");
+  private static final MediaType MULTI_FORM_TYPE = MultipartBody.FORM;
+  private static OkHttpClient client = null;
   private static int connectTimeout = TIMEOUT_OF_CONNECT_DEFAULT;
   private static int readTimeout = TIMEOUT_OF_READ_DEFAULT;
   private static int writeTimeout = TIMEOUT_OF_WRITE_DEFAULT;
 
   private static Request generatePlainRequest(String url, HttpMethod method, String content,
-      ContentType type) {
+                                              ContentType type) {
     MediaType mediaType = type == ContentType.JSON ? JSON_TYPE : XML_TYPE;
     if (content == null) {
       content = "";
@@ -145,19 +132,15 @@ public class HttpHelper {
 
   /**
    * 发送请求，Content-Type = application/json或application/xml.
-   * 
-   * @param url
-   *          请求地址
-   * @param method
-   *          请求方法
-   * @param content
-   *          请求参数体
-   * @param type
-   *          指定请求内容格式，JSON或XML
+   *
+   * @param url     请求地址
+   * @param method  请求方法
+   * @param content 请求参数体
+   * @param type    指定请求内容格式，JSON或XML
    * @return response字符串
    */
   public static ResponseDigest requestWithBodyContent(String url, HttpMethod method, String content,
-      ContentType type) {
+                                                      ContentType type) {
     Request request = generatePlainRequest(url, method, content, type);
     Response response = null;
     try {
@@ -176,19 +159,15 @@ public class HttpHelper {
 
   /**
    * 发送请求，并返回二进制流，Content-Type = application/json或application/xml.
-   * 
-   * @param url
-   *          请求地址
-   * @param method
-   *          请求方法
-   * @param content
-   *          请求参数体
-   * @param type
-   *          指定请求内容格式，JSON或XML
+   *
+   * @param url     请求地址
+   * @param method  请求方法
+   * @param content 请求参数体
+   * @param type    指定请求内容格式，JSON或XML
    * @return response二进制流
    */
   public static ResponseDigest requestStreamWithBodyContent(String url, HttpMethod method,
-      String content, ContentType type) {
+                                                            String content, ContentType type) {
     Request request = generatePlainRequest(url, method, content, type);
     Response response = null;
     try {
@@ -203,16 +182,13 @@ public class HttpHelper {
 
   /**
    * 发送请求，带Form表单数据，Content-Type = application/x-www-form-urlencoded.
-   * 
+   * <p>
    * <p>
    * 只支持POST，PUT，PATCH，DELETE方法
-   * 
-   * @param url
-   *          地址
-   * @param method
-   *          请求方法
-   * @param form
-   *          表单数据.
+   *
+   * @param url    地址
+   * @param method 请求方法
+   * @param form   表单数据.
    * @return response字符串
    */
   public static ResponseDigest requestWithForm(String url, HttpMethod method, List<FormData> form) {
@@ -234,20 +210,17 @@ public class HttpHelper {
 
   /**
    * 发送请求，带Form表单数据，并返回二进制流，Content-Type = application/x-www-form-urlencoded.
-   * 
+   * <p>
    * <p>
    * 只支持POST，PUT，PATCH，DELETE方法
-   * 
-   * @param url
-   *          地址
-   * @param method
-   *          请求方法
-   * @param form
-   *          表单数据.
+   *
+   * @param url    地址
+   * @param method 请求方法
+   * @param form   表单数据.
    * @return response二进制流
    */
   public static ResponseDigest requestStreamWithForm(String url, HttpMethod method,
-      List<FormData> form) {
+                                                     List<FormData> form) {
     Request request = generateFormRequest(url, method, form);
     Response response = null;
     try {
@@ -262,33 +235,27 @@ public class HttpHelper {
 
   /**
    * 以POST方法上传一个Multipart数据.
-   * 
-   * @param url
-   *          请求地址
-   * @param multiFile
-   *          文件信息
-   * @param additionalData
-   *          附加表单数据
+   *
+   * @param url            请求地址
+   * @param multiFile      文件信息
+   * @param additionalData 附加表单数据
    * @return response字符串
    */
   public static ResponseDigest requestWithFile(String url, MultiFile multiFile,
-      List<FormData> additionalData) {
+                                               List<FormData> additionalData) {
     return requestWithFile(url, Lists.newArrayList(multiFile), additionalData);
   }
 
   /**
    * 以POST方法上传一个Multipart数据，内含多个文件，Content-Type = multipart/form-data.
-   * 
-   * @param url
-   *          请求地址
-   * @param multiFiles
-   *          多个文件信息
-   * @param additionalData
-   *          附加表单数据
+   *
+   * @param url            请求地址
+   * @param multiFiles     多个文件信息
+   * @param additionalData 附加表单数据
    * @return response字符串
    */
   public static ResponseDigest requestWithFile(String url, List<MultiFile> multiFiles,
-      List<FormData> additionalData) {
+                                               List<FormData> additionalData) {
     okhttp3.MultipartBody.Builder builder = new MultipartBody.Builder();
     builder.setType(MULTI_FORM_TYPE);
     if (additionalData != null) {

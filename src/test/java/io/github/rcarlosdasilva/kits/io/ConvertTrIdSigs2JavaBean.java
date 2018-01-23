@@ -1,5 +1,13 @@
 package io.github.rcarlosdasilva.kits.io;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
@@ -8,19 +16,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-
 /**
  * 将TrID_sigs_GCK中的文件签名信息XML文件，转换为JSON格式
- * 
+ *
  * @author <a href="mailto:rcarlosdasilva@qq.com">Dean Zhao</a>
  */
 public class ConvertTrIdSigs2JavaBean {

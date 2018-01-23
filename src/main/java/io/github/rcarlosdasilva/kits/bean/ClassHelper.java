@@ -1,17 +1,16 @@
 package io.github.rcarlosdasilva.kits.bean;
 
-import java.net.URL;
-
+import com.google.common.base.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Optional;
+import java.net.URL;
 
 /**
  * 类工具
  * <p>
  * <b>Thanks for Hutool authors! 略有修改</b><br>
- * 
+ *
  * @author <a href="mailto:rcarlosdasilva@qq.com">Dean Zhao</a>
  */
 public class ClassHelper {
@@ -24,11 +23,9 @@ public class ClassHelper {
 
   /**
    * 获得资源相对路径对应的URL.
-   * 
-   * @param resource
-   *          资源相对路径
-   * @param clazz
-   *          基准Class，获得的相对路径相对于此Class所在路径，如果为{@code null}则相对ClassPath
+   *
+   * @param resource 资源相对路径
+   * @param clazz    基准Class，获得的相对路径相对于此Class所在路径，如果为{@code null}则相对ClassPath
    * @return {@link URL}
    */
   public static Optional<URL> resource(String resource, Class<?> clazz) {
@@ -46,13 +43,13 @@ public class ClassHelper {
   /**
    * 获取{@link ClassLoader}<br>
    * 获取顺序如下：<br>
-   * 
+   * <p>
    * <pre>
    * 1、获取当前线程的ContextClassLoader
    * 2、获取{@link ClassHelper}类对应的ClassLoader
    * 3、获取系统ClassLoader（{@link ClassLoader#getSystemClassLoader()}）
    * </pre>
-   * 
+   *
    * @return 类加载器
    */
   public static Optional<ClassLoader> classLoader() {

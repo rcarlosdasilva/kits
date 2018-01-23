@@ -4,7 +4,7 @@ import java.io.File;
 
 /**
  * HTTP请求文件信息
- * 
+ *
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
 public class MultiFile {
@@ -16,13 +16,10 @@ public class MultiFile {
 
   /**
    * 构造函数,使用通用文件类型.
-   * 
-   * @param fileKey
-   *          文件key
-   * @param fileName
-   *          文件名
-   * @param file
-   *          文件
+   *
+   * @param fileKey  文件key
+   * @param fileName 文件名
+   * @param file     文件
    */
   public MultiFile(String fileKey, String fileName, File file) {
     this.contentType = ContentType.ANY;
@@ -33,15 +30,11 @@ public class MultiFile {
 
   /**
    * 构造函数,指定文件类型.
-   * 
-   * @param contentType
-   *          Content-Type
-   * @param fileKey
-   *          文件key
-   * @param fileName
-   *          文件名
-   * @param file
-   *          文件
+   *
+   * @param contentType Content-Type
+   * @param fileKey     文件key
+   * @param fileName    文件名
+   * @param file        文件
    */
   public MultiFile(ContentType contentType, String fileKey, String fileName, File file) {
     this.contentType = contentType;

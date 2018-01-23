@@ -1,8 +1,8 @@
 package io.github.rcarlosdasilva.kits.net.http;
 
-import java.io.InputStream;
-
 import okhttp3.Headers;
+
+import java.io.InputStream;
 
 public class ResponseDigest {
 
@@ -17,7 +17,7 @@ public class ResponseDigest {
   }
 
   public static ResponseDigest digest(int code, String message, Headers headers, long contentLength,
-      String value) {
+                                      String value) {
     ResponseDigest digest = new ResponseDigest();
     digest.code = code;
     digest.message = message;
@@ -28,7 +28,7 @@ public class ResponseDigest {
   }
 
   public static ResponseDigest digest(int code, String message, Headers headers, long contentLength,
-      InputStream value) {
+                                      InputStream value) {
     ResponseDigest digest = new ResponseDigest();
     digest.code = code;
     digest.message = message;

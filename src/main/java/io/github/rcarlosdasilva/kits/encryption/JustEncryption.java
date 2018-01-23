@@ -1,9 +1,9 @@
 package io.github.rcarlosdasilva.kits.encryption;
 
-import java.util.Random;
-
 import io.github.rcarlosdasilva.kits.string.Characters;
 import io.github.rcarlosdasilva.kits.string.TextHelper;
+
+import java.util.Random;
 
 public class JustEncryption {
 
@@ -15,7 +15,7 @@ public class JustEncryption {
     final long time = System.currentTimeMillis();
     final String salt = salt(saltSize);
 
-    final String[] chips = { identifier, password, salt, String.valueOf(time) };
+    final String[] chips = {identifier, password, salt, String.valueOf(time)};
     final int serial = RAND.nextInt(4);
     final String signature = signature(chips, serial);
     System.out.println(signature);

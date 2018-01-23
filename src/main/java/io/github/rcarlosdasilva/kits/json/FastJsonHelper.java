@@ -1,18 +1,14 @@
 package io.github.rcarlosdasilva.kits.json;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONReader;
 import com.alibaba.fastjson.JSONWriter;
 
+import java.io.*;
+
 /**
  * JSON工具的FastJson实现
- * 
+ *
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
 public class FastJsonHelper implements JsonHelper {

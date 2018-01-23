@@ -1,15 +1,12 @@
 package io.github.rcarlosdasilva.kits.convert.collect.impl;
 
-import java.util.List;
-import java.util.Map;
-
+import com.google.common.collect.Maps;
+import io.github.rcarlosdasilva.kits.convert.collect.CollectionInternalConverter;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.google.common.collect.Maps;
-
-import io.github.rcarlosdasilva.kits.convert.collect.CollectionInternalConverter;
-import io.github.rcarlosdasilva.kits.convert.collect.impl.Map2ListConverter;
+import java.util.List;
+import java.util.Map;
 
 public class Map2ListConverterTest {
 

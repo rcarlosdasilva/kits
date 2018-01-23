@@ -1,9 +1,9 @@
 package io.github.rcarlosdasilva.kits.convert;
 
-import java.nio.charset.Charset;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.nio.charset.Charset;
 
 public class CharsetConverterTest {
 

@@ -1,11 +1,11 @@
 package io.github.rcarlosdasilva.kits.io;
 
-import java.util.Arrays;
-
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
+import java.util.Arrays;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FileTest {

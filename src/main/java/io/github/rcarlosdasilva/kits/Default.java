@@ -4,7 +4,7 @@ import java.nio.charset.Charset;
 
 /**
  * 默认参数
- * 
+ *
  * @author <a href="mailto:rcarlosdasilva@qq.com">Dean Zhao</a>
  */
 public final class Default {

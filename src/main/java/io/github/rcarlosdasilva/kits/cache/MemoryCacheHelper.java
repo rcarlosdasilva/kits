@@ -1,25 +1,24 @@
 package io.github.rcarlosdasilva.kits.cache;
 
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
 import com.google.common.base.Preconditions;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Maps;
 
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 /**
  * 内存缓存助手
- * 
+ *
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
 public class MemoryCacheHelper {
 
-  private static final String DEFAULT_CACHE_NAME = "__default_cache__";
   public static final int DEFAULT_EXPIRE_AFTER_ACCESS = 10;
   public static final int DEFAULT_EXPIRE_AFTER_WRITE = 30;
   public static final int DEFAULT_MAX_SIZE = 5000;
-
+  private static final String DEFAULT_CACHE_NAME = "__default_cache__";
   private static final Map<String, Cache<String, Object>> cacheManager = Maps.newConcurrentMap();
 
   static {
@@ -40,11 +39,9 @@ public class MemoryCacheHelper {
 
   /**
    * 创建一个新的cache容器.
-   * 
-   * @param name
-   *          cache名
-   * @param config
-   *          配置
+   *
+   * @param name   cache名
+   * @param config 配置
    */
   public static void create(String name, MemoryCacheConfig config) {
     build(name, config);
@@ -153,9 +150,8 @@ public class MemoryCacheHelper {
 
   /**
    * cache容器是否存在.
-   * 
-   * @param target
-   *          cache名
+   *
+   * @param target cache名
    * @return true/false
    */
   public static boolean hadCache(String target) {
@@ -164,9 +160,8 @@ public class MemoryCacheHelper {
 
   /**
    * 删除Cache容器.
-   * 
-   * @param target
-   *          cache名
+   *
+   * @param target cache名
    */
   public static void discardCache(String target) {
     cacheManager.remove(target);
@@ -174,13 +169,19 @@ public class MemoryCacheHelper {
 
   /**
    * 缓存配置，参考Guava的CacheBuilder选项
-   * 
+   *
    * @author Dean Zhao (rcarlosdasilva@qq.com)
    */
   static class MemoryCacheConfig {
+
     private static final int UNCONFIG_INT = -1;
 
     private static final MemoryCacheConfig DEFAULT_CONFIG = new MemoryCacheConfig();
+
+    static {
+      DEFAULT_CONFIG.maximumSize = DEFAULT_MAX_SIZE;
+      DEFAULT_CONFIG.expireAfterAccess = DEFAULT_EXPIRE_AFTER_ACCESS;
+    }
 
     private int initialCapacity = UNCONFIG_INT;
     private int concurrencyLevel = UNCONFIG_INT;
@@ -190,11 +191,6 @@ public class MemoryCacheHelper {
     private long expireAfterAccess = UNCONFIG_INT;
     private long refreshAfterWrite = UNCONFIG_INT;
     private TimeUnit timeUnit = TimeUnit.MINUTES;
-
-    static {
-      DEFAULT_CONFIG.maximumSize = DEFAULT_MAX_SIZE;
-      DEFAULT_CONFIG.expireAfterAccess = DEFAULT_EXPIRE_AFTER_ACCESS;
-    }
 
     public static MemoryCacheConfig getDefault() {
       return DEFAULT_CONFIG;

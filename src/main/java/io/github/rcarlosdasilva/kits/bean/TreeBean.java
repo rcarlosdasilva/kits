@@ -1,15 +1,15 @@
 package io.github.rcarlosdasilva.kits.bean;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.rits.cloning.Cloner;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.UUID;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.rits.cloning.Cloner;
 
 /**
  * 树形结构Bean封装

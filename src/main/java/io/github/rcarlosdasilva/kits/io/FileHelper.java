@@ -1,34 +1,28 @@
 package io.github.rcarlosdasilva.kits.io;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Ordering;
+import io.github.rcarlosdasilva.kits.net.HttpHelper;
+import io.github.rcarlosdasilva.kits.net.http.ContentType;
+import io.github.rcarlosdasilva.kits.net.http.HttpMethod;
+import io.github.rcarlosdasilva.kits.net.http.ResponseDigest;
+import io.github.rcarlosdasilva.kits.string.TextHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Ordering;
-
-import io.github.rcarlosdasilva.kits.net.HttpHelper;
-import io.github.rcarlosdasilva.kits.net.http.ContentType;
-import io.github.rcarlosdasilva.kits.net.http.HttpMethod;
-import io.github.rcarlosdasilva.kits.net.http.ResponseDigest;
-import io.github.rcarlosdasilva.kits.string.TextHelper;
-
 /**
  * 文件工具
- * 
+ *
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
 public class FileHelper {
@@ -128,9 +122,8 @@ public class FileHelper {
    * 获取存!在!的!指定资源文件.
    * <p>
    * 可按照相对路径获取资源文件，若资源文件不存在，不返回File实例，即只要有File实例，则file.exists()为true
-   * 
-   * @param path
-   *          文件路径（相对或绝对）
+   *
+   * @param path 文件路径（相对或绝对）
    * @return {@link File}
    */
   public static Optional<File> from(String path) {

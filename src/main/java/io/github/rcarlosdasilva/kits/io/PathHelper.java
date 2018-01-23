@@ -1,21 +1,20 @@
 package io.github.rcarlosdasilva.kits.io;
 
-import java.net.URL;
-import java.util.List;
-
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-
 import io.github.rcarlosdasilva.kits.bean.ClassHelper;
 import io.github.rcarlosdasilva.kits.net.UrlHelper;
 import io.github.rcarlosdasilva.kits.string.TextHelper;
+
+import java.net.URL;
+import java.util.List;
 
 /**
  * 本地路径工具
  * <p>
  * <b>Thanks for Hutool authors! 略有修改</b><br>
- * 
+ *
  * @author <a href="mailto:rcarlosdasilva@qq.com">Dean Zhao</a>
  */
 public class PathHelper {
@@ -34,9 +33,9 @@ public class PathHelper {
    * <li>去除两边空格</li>
    * <li>".."和 "."转换为绝对路径，当".."多于已有路径时，直接返回根路径</li>
    * </ol>
-   * 
+   * <p>
    * 例如：
-   * 
+   * <p>
    * <pre>
    * "/foo//" =》 "/foo/"
    * "/foo/./" =》 "/foo/"
@@ -54,9 +53,8 @@ public class PathHelper {
    * "~/foo/../bar/" =》 "~/bar/"
    * "~/../bar" =》 "bar"
    * </pre>
-   * 
-   * @param path
-   *          原路径
+   *
+   * @param path 原路径
    * @return 修复后的路径
    */
   public static String fix(final String path) {
@@ -109,11 +107,9 @@ public class PathHelper {
    * <b>不保证路径资源绝对存在</b>
    * <p>
    * 获取不到会将入参path返回
-   * 
-   * @param path
-   *          文件（夹）名或路径
-   * @param clazz
-   *          相对路径所相对的类，可为null
+   *
+   * @param path  文件（夹）名或路径
+   * @param clazz 相对路径所相对的类，可为null
    * @return 绝对路径
    */
   public static String absolutePath(final String path, Class<?> clazz) {

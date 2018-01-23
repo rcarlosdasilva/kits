@@ -3,8 +3,6 @@ package io.github.rcarlosdasilva.kits.convert;
 import org.junit.Assert;
 import org.junit.Test;
 
-import io.github.rcarlosdasilva.kits.convert.PrimitiveConverter;
-
 public class PrimitiveConverterTest {
 
   @Test

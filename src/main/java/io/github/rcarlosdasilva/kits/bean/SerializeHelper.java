@@ -1,14 +1,10 @@
 package io.github.rcarlosdasilva.kits.bean;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 /**
  * 序列化助手
- * 
+ *
  * @author Dean Zhao (rcarlosdasilva@qq.com)
  */
 public class SerializeHelper {

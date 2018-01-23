@@ -1,11 +1,12 @@
 package io.github.rcarlosdasilva.kits.net.ua;
 
-import static java.util.regex.Pattern.CASE_INSENSITIVE;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.util.regex.Pattern.CASE_INSENSITIVE;
+
 class PatternBasedVersionFetcher implements VersionFetcher {
+
   private final Pattern pattern;
 
   PatternBasedVersionFetcher(String regex) {
@@ -30,7 +31,7 @@ class PatternBasedVersionFetcher implements VersionFetcher {
     String majorVersion = matcher.group(2);
     String minorVersion = "0";
     if (matcher.groupCount() > 2) // usually but not always there is a minor
-                                  // version
+      // version
       minorVersion = matcher.group(3);
     return new Version(fullVersionString, majorVersion, minorVersion);
   }

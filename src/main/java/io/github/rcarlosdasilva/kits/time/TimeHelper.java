@@ -1,12 +1,11 @@
 package io.github.rcarlosdasilva.kits.time;
 
-import java.util.Locale;
-
+import com.google.common.base.Preconditions;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
 
-import com.google.common.base.Preconditions;
+import java.util.Locale;
 
 /**
  * 针对joda-time的扩展使用
@@ -14,13 +13,13 @@ import com.google.common.base.Preconditions;
  * joda-time对周的计算默认是是使用ISO8601周算法。按照这个算法，认为一年中至少要占有四天，那么这个周才属于这一年。
  * 例如一月一号是周四，那么意味着这个周在这一年中刚好占有四天，这个周就属于这一年。如果一月一号是周五，
  * 那这个周在这一年中只占有三天，根据算法，这个周属于上一年。年的最后一周也是按照这个逻辑计算。
- *
+ * <p>
  * 国内对周的概念可能会和默认的ISO算法有出入，有的业务需求可能会认为完整的周一至周日7天都在一年中，才算是第一周，
  * 另外有些需求可能会认为一月一号所在的周，不论这天是周几，这周都是这一年的第一周。为了适应这两种需要，
  * 这里提供了两个配置参数：useIsoWeekAlgorithm和admitWholeFirstWeek。 1. useIsoWeekAlgorithm
  * 默认是true，如果设置为false，则不使用joda-time的默认周算法，具体算法参考admitWholeFirstWeek参数 2.
  * admitWholeFirstWeek 默认是true，即认为完整的7天在一年中则为第一周。否则一月一号所在的周即为第一周
- * 
+ *
  * @author <a href="mailto:rcarlosdasilva@qq.com">Dean Zhao</a>
  */
 public final class TimeHelper {
@@ -39,9 +38,8 @@ public final class TimeHelper {
    * 设置是否使用ISO8601周算法.
    * <p>
    * 该设置影响所有与周相关的计算
-   * 
-   * @param use
-   *          use
+   *
+   * @param use use
    */
   public static void useIsoWeekAlgorithm(boolean use) {
     useIsoWeekAlgorithm = use;
@@ -51,9 +49,8 @@ public final class TimeHelper {
    * 是否以完整的一周天数（7天）作为一年的第一周或最后一周。false时以一月一号所在的周作为一年的第一周，不论这天是周几（即便一月一号是周日，也算第一周，一月二号是第二周），默认true.
    * <p>
    * <b>useIsoWeekAlgorithm设置为false时有效</b>，该设置影响所有与周相关的计算
-   * 
-   * @param admit
-   *          admit
+   *
+   * @param admit admit
    */
   public static void admitWholeFirstWeek(boolean admit) {
     admitWholeFirstWeek = admit;
@@ -61,9 +58,8 @@ public final class TimeHelper {
 
   /**
    * 指定获取周名称的方式，默认中文周几.
-   * 
-   * @param style
-   *          {@link TimeWeekName}
+   *
+   * @param style {@link TimeWeekName}
    */
   public static void setWeekNameStyle(TimeWeekName style) {
     weekName = style;
@@ -75,9 +71,8 @@ public final class TimeHelper {
    * 该方法可理解为，以当前年的第一周，向后（weeks - 1周），如果指定的周数大于52或53，日期会调整到n年之后
    * <p>
    * 计算规则参考 {@link #firstWeek()}
-   * 
-   * @param weeks
-   *          第n周
+   *
+   * @param weeks 第n周
    * @return {@link DateTime}
    */
   public static DateTime weekOn(int weeks) {
@@ -90,11 +85,9 @@ public final class TimeHelper {
    * 该方法可理解为，以当前年的第一周，向后（weeks - 1周），如果指定的周数大于52或53，日期会调整到n年之后
    * <p>
    * 计算规则参考 {@link #firstWeek()}
-   * 
-   * @param year
-   *          指定哪一年
-   * @param weeks
-   *          第n周
+   *
+   * @param year  指定哪一年
+   * @param weeks 第n周
    * @return {@link DateTime}
    */
   public static DateTime weekOn(int year, int weeks) {
@@ -107,11 +100,9 @@ public final class TimeHelper {
    * 该方法可理解为，以当前年的第一周，向后（weeks - 1周），如果指定的周数大于52或53，日期会调整到n年之后
    * <p>
    * 计算规则参考 {@link #firstWeek()}
-   * 
-   * @param time
-   *          指定时间
-   * @param weeks
-   *          第n周
+   *
+   * @param time  指定时间
+   * @param weeks 第n周
    * @return {@link DateTime}
    */
   public static DateTime weekOn(DateTime time, int weeks) {
@@ -136,12 +127,12 @@ public final class TimeHelper {
    * 2016-01-04 星期一） <br>
    * 2. 如果一月一号在周四及以前，则这个周在当前年占有3天以上，那么这个周就是当前年的第一周，这个周的第一天就会是当前年的前一年12月中的一天。
    * （例如2015年的第一周应为2014-12-29 星期一）
-   * 
+   * <p>
    * <p>
    * PS: 如果不想使用该算法，可调用 {@link #useIsoWeekAlgorithm(boolean)} 方法禁用。禁用后第一周的判断取决于
    * {@link #admitWholeFirstWeek(boolean)}（禁用后默认2015年的第一周为2015-01-05
    * 星期一，如果admitWholeFirstWeek设置为false，2016年的第一周应为 2015-12-28 星期一）
-   * 
+   *
    * @return {@link DateTime}
    */
   public static DateTime firstWeek() {
@@ -157,14 +148,13 @@ public final class TimeHelper {
    * 2016-01-04 星期一） <br>
    * 2. 如果一月一号在周四及以前，则这个周在当前年占有3天以上，那么这个周就是当前年的第一周，这个周的第一天就会是当前年的前一年12月中的一天。
    * （例如2015年的第一周应为2014-12-29 星期一）
-   * 
+   * <p>
    * <p>
    * PS: 如果不想使用该算法，可调用 {@link #useIsoWeekAlgorithm(boolean)} 方法禁用。禁用后第一周的判断取决于
    * {@link #admitWholeFirstWeek(boolean)}（禁用后默认2015年的第一周为2015-01-05
    * 星期一，如果admitWholeFirstWeek设置为false，2016年的第一周应为 2015-12-28 星期一）
-   * 
-   * @param year
-   *          年
+   *
+   * @param year 年
    * @return {@link DateTime}
    */
   public static DateTime firstWeek(int year) {
@@ -180,14 +170,13 @@ public final class TimeHelper {
    * 2016-01-04 星期一） <br>
    * 2. 如果一月一号在周四及以前，则这个周在当前年占有3天以上，那么这个周就是当前年的第一周，这个周的第一天就会是当前年的前一年12月中的一天。
    * （例如2015年的第一周应为2014-12-29 星期一）
-   * 
+   * <p>
    * <p>
    * PS: 如果不想使用该算法，可调用 {@link #useIsoWeekAlgorithm(boolean)} 方法禁用。禁用后第一周的判断取决于
    * {@link #admitWholeFirstWeek(boolean)}（禁用后默认2015年的第一周为2015-01-05
    * 星期一，如果admitWholeFirstWeek设置为false，2016年的第一周应为 2015-12-28 星期一）
-   * 
-   * @param time
-   *          指定时间
+   *
+   * @param time 指定时间
    * @return {@link DateTime}
    */
   public static DateTime firstWeek(DateTime time) {
@@ -217,7 +206,7 @@ public final class TimeHelper {
    * <p>
    * 1. 如果是按照标准的ISO周算法，最后一周的判断依据是，12月31号是否是周一周二周三或周四<br>
    * 2. 否则，默认一年按照52周计算。在admitWholeFirstWeek为true的设置下，第52周很可能会在第二年，这种情况下，会按照51周计算
-   * 
+   *
    * @return {@link DateTime}
    */
   public static DateTime lastWeek() {
@@ -229,9 +218,8 @@ public final class TimeHelper {
    * <p>
    * 1. 如果是按照标准的ISO周算法，最后一周的判断依据是，12月31号是否是周一周二周三或周四<br>
    * 2. 否则，默认一年按照52周计算。在admitWholeFirstWeek为true的设置下，第52周很可能会在第二年，这种情况下，会按照51周计算
-   * 
-   * @param year
-   *          年
+   *
+   * @param year 年
    * @return {@link DateTime}
    */
   public static DateTime lastWeek(int year) {
@@ -243,9 +231,8 @@ public final class TimeHelper {
    * <p>
    * 1. 如果是按照标准的ISO周算法，最后一周的判断依据是，12月31号是否是周一周二周三或周四<br>
    * 2. 否则，默认一年按照52周计算。在admitWholeFirstWeek为true的设置下，第52周很可能会在第二年，这种情况下，会按照51周计算
-   * 
-   * @param time
-   *          指定时间
+   *
+   * @param time 指定时间
    * @return {@link DateTime}
    */
   public static DateTime lastWeek(DateTime time) {
@@ -268,7 +255,7 @@ public final class TimeHelper {
    * 计算当前年共有多少周.
    * <p>
    * 如果按照标准的ISO周算法时，并且admitWholeFirstWeek为false时，因为一年有52个周零2天或3天（闰年），所以都是53周
-   * 
+   *
    * @return weeks
    */
   public static int weeksIn() {
@@ -279,9 +266,8 @@ public final class TimeHelper {
    * 计算给定年共有多少周.
    * <p>
    * 如果按照标准的ISO周算法时，并且admitWholeFirstWeek为false时，因为一年有52个周零2天或3天（闰年），所以都是53周
-   * 
-   * @param year
-   *          年
+   *
+   * @param year 年
    * @return weeks
    */
   public static int weeksIn(int year) {
@@ -292,9 +278,8 @@ public final class TimeHelper {
    * 计算当前年共有多少周.
    * <p>
    * 如果按照标准的ISO周算法时，并且admitWholeFirstWeek为false时，因为一年有52个周零2天或3天（闰年），所以都是53周
-   * 
-   * @param time
-   *          {@link DateTime}
+   *
+   * @param time {@link DateTime}
    * @return weeks
    */
   public static int weeksIn(DateTime time) {
@@ -307,7 +292,7 @@ public final class TimeHelper {
    * 当前周是第几周.
    * <p>
    * 当使用整周计算时（admitWholeFirstWeek为true），如果时间为一月初的几天，可能不会被认为是第一周，这时返回0周
-   * 
+   *
    * @return weeks of a year
    */
   public static int weeksOf() {
@@ -318,9 +303,8 @@ public final class TimeHelper {
    * 给定时间是第几周.
    * <p>
    * 当使用整周计算时（admitWholeFirstWeek为true），如果时间为一月初的几天，可能不会被认为是第一周，这时返回0周
-   * 
-   * @param time
-   *          {@link DateTime}
+   *
+   * @param time {@link DateTime}
    * @return weeks of a year
    */
   public static int weeksOf(DateTime time) {
@@ -356,7 +340,7 @@ public final class TimeHelper {
    * 当前周几名称，例如周一周二.
    * <p>
    * 参考 {@link #setWeekNameStyle(TimeWeekName)}
-   * 
+   *
    * @return name
    */
   public static String weekName() {
@@ -367,9 +351,8 @@ public final class TimeHelper {
    * 给定时间的周几名称，例如周一周二.
    * <p>
    * 参考 {@link #setWeekNameStyle(TimeWeekName)}
-   * 
-   * @param time
-   *          {@link DateTime}
+   *
+   * @param time {@link DateTime}
    * @return name
    */
   public static String weekName(DateTime time) {
@@ -388,11 +371,9 @@ public final class TimeHelper {
    * 给定时间的周几名称，可自定义，适用于 {@link TimeWeekName} 无法满足需要的情况.
    * <p>
    * 参考 {@link #setWeekNameStyle(TimeWeekName)}
-   * 
-   * @param time
-   *          {@link DateTime}
-   * @param names
-   *          备选名称数组，长度必须为7
+   *
+   * @param time  {@link DateTime}
+   * @param names 备选名称数组，长度必须为7
    * @return name
    */
   public static String weekName(DateTime time, String... names) {
@@ -407,7 +388,7 @@ public final class TimeHelper {
    * 当前周是否跨越两个月.
    * <p>
    * 即周一和周日不在同一个月份
-   * 
+   *
    * @return boolean
    */
   public static boolean weekSpansTwoMonth() {
@@ -418,9 +399,8 @@ public final class TimeHelper {
    * 给定时间周是否跨越两个月.
    * <p>
    * 即周一和周日不在同一个月份
-   * 
-   * @param time
-   *          {@link DateTime}
+   *
+   * @param time {@link DateTime}
    * @return boolean
    */
   public static boolean weekSpansTwoMonth(DateTime time) {
@@ -433,7 +413,7 @@ public final class TimeHelper {
    * 给定时间周是否跨越两年.
    * <p>
    * 即周一和周日不在同一年
-   * 
+   *
    * @return boolean
    */
   public static boolean weekSpansTwoYear() {
@@ -444,9 +424,8 @@ public final class TimeHelper {
    * 给定时间周是否跨越两年.
    * <p>
    * 即周一和周日不在同一年
-   * 
-   * @param time
-   *          {@link DateTime}
+   *
+   * @param time {@link DateTime}
    * @return boolean
    */
   public static boolean weekSpansTwoYear(DateTime time) {
@@ -457,7 +436,7 @@ public final class TimeHelper {
 
   /**
    * 当前年，二月有几天.
-   * 
+   *
    * @return days in february
    */
   public static int daysInFebruary() {
@@ -466,9 +445,8 @@ public final class TimeHelper {
 
   /**
    * 当前年，二月有几天.
-   * 
-   * @param time
-   *          {@link DateTime}
+   *
+   * @param time {@link DateTime}
    * @return days in february
    */
   public static int daysInFebruary(DateTime time) {
@@ -479,9 +457,8 @@ public final class TimeHelper {
 
   /**
    * 计算年龄（公历年龄）.
-   * 
-   * @param dob
-   *          出生年月日（时分秒等信息不参与计算）
+   *
+   * @param dob 出生年月日（时分秒等信息不参与计算）
    * @return age
    */
   public static int age(DateTime dob) {
@@ -490,11 +467,9 @@ public final class TimeHelper {
 
   /**
    * 计算年龄（公历年龄）.
-   * 
-   * @param dob
-   *          出生年月日（时分秒等信息不参与计算）
-   * @param time
-   *          年龄计算的参照时间
+   *
+   * @param dob  出生年月日（时分秒等信息不参与计算）
+   * @param time 年龄计算的参照时间
    * @return age
    */
   public static int age(DateTime dob, DateTime time) {

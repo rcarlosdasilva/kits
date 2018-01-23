@@ -1,17 +1,12 @@
 package io.github.rcarlosdasilva.kits.io;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
+import com.google.common.base.Optional;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.google.common.base.Optional;
+import java.io.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class StreamTest {
